@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Montserrat:wght@400;700&family=Space+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Merriweather:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #282d33;       /* Deep Charcoal */
+  --bgalt: #181c21;       /* Deep Charcoal */
+  --text: #EEEEEE;      /* Light Grey */
+  --accent: #08b8fe; /* Teal */
+  --secondary: #393E46; /* Mid-tone Grey */
+}
+
+/* Backgrounds */
+.bg-charcoal { background-color: #2a3039; } /* Header BG */
+.bg-carbon-navy{ background-color: #181c21; } /* Header BG */
+.bg-deep-navy { background-color: #153448; } 
+.bg-slate-blue { background-color: #3C5B6F; } 
+
+/* Text Colors */
+.text-light-grey { color: #EEEEEE; }
+.text-mid-tone { color: #393E46; }
+.text-teal { color: #00ADB5; }
+.text-off-white { color: #DFD0B8; }
+
+
+/* Mouseover Transition */
+.nav-link {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: #DFD0B8;
+
+  transform-origin: center;
+  transform: scaleX(1) scaleY(0);
+  transition: transform 110ms ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1) scaleY(1.5);
+}

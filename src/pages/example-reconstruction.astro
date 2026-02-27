@@ -1,0 +1,195 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Example Reconstruction | Prima Veritas">
+
+<main class="flex-1">
+
+  <!-- HERO -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h1 class="font-sans text-4xl md:text-5xl tracking-tight text-off-white leading-tight">
+        Example Reconstruction
+      </h1>
+
+      <p class="mt-6 max-w-4xl text-xl text-off-white/80">
+        A concrete example of how a fragmented operational event history becomes a sealed, reproducible chain.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- SCENARIO -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Scenario
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          A robotics assembly cell reports actuator state transitions from three systems:
+          PLC telemetry, operator workstation logs, and quality inspection records.
+        </p>
+
+        <p>
+          Timestamps drift. Event schemas differ. Revision identifiers are inconsistent.
+          No single system preserves full context.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- RAW INTAKE -->
+<section class="border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-10">
+
+    <h2 class="text-lg font-sans tracking-tight text-off-white">
+      Raw intake
+    </h2>
+
+    <div class="mt-6 grid md:grid-cols-3 gap-10 max-w-5xl text-sm text-off-white/80">
+
+      <div>
+        <strong>PLC Telemetry</strong><br/>
+        <code class="block mt-2 text-off-white/60">
+          14:02:11 ACTUATOR_A → EXTEND<br/>
+          14:02:14 ACTUATOR_A → RETRACT
+        </code>
+      </div>
+
+      <div>
+        <strong>Operator Log</strong><br/>
+        <code class="block mt-2 text-off-white/60">
+          Job ID 7421 initiated<br/>
+          Manual override triggered
+        </code>
+      </div>
+
+      <div>
+        <strong>Quality Record</strong><br/>
+        <code class="block mt-2 text-off-white/60">
+          Revision 3.2 applied<br/>
+          Inspection pass recorded
+        </code>
+      </div>
+
+    </div>
+
+    <div class="mt-10 max-w-4xl text-sm text-off-white/80">
+      <strong>Observed Issues</strong>
+      <ul class="mt-3 space-y-2 text-off-white/60">
+        <li>Timestamp drift</li>
+        <li>Non-uniform identifiers</li>
+        <li>Missing cross-reference keys</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- CANONICAL EVENT ENVELOPE -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Canonical envelope normalization
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          Each raw record is transformed into a canonical envelope:
+          unified timestamp, source identifier, schema version, and structured payload.
+        </p>
+
+        <code class="block mt-4 text-off-white/60">
+          {`{
+  event_id: "e1032",
+  source: "plc.telemetry",
+  timestamp: "2026-04-12T14:02:11Z",
+  revision: "3.2",
+  payload: {
+    actuator: "A",
+    state: "EXTEND"
+  }
+}`}
+        </code>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- EVENT CHAIN -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Event chain construction
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          Each envelope is hashed. The hash of the prior event is embedded in the next.
+          Order is explicit. Mutation invalidates the sequence.
+        </p>
+
+        <code class="block mt-4 text-off-white/60">
+          {`e1032 → hash: a94f...
+e1033 → prev_hash: a94f...
+e1034 → prev_hash: b221...`}
+        </code>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- RECONSTRUCTION -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Deterministic reconstruction
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          From the ordered chain, system state at any point in time can be reconstructed.
+          Actuator state, job context, and revision lineage are derived from history.
+        </p>
+
+        <p>
+          Given the same chain input, reconstruction output is identical across environments.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- VERIFICATION -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Independent verification
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          The final bundle contains the full event sequence and hash lineage.
+          A third party can validate structural integrity without access to the source systems.
+        </p>
+      </div>
+              <div class="mt-10 text-xl">
+        <a href="/contact"
+            class="inline-block text-off-white hover:text-[var(--accent)] transition-colors">
+            Schedule Technical Review →
+        </a>
+        </div>
+    </div>
+  </section>
+
+
+
+
+</main>
+
+</Layout>

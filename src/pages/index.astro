@@ -1,11 +1,170 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Prima Veritas">
+
+<main class="flex-1">
+
+  <!-- HERO -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h1 class="font-sans text-4xl md:text-5xl tracking-tight text-off-white leading-tight">
+        Deterministic Event Replay for Operational Systems
+      </h1>
+
+      <p class="mt-6 max-w-5xl text-xl text-center text-off-white text-off-white/80">
+        Prima Veritas creates a sealed, time-ordered record of physical and digital events without replacing existing tools.
+      </p>
+
+      <div class="mt-10 flex-col text-sm gap-1 tracking-wide">
+        <a href="/contact" class="nav-link transition-colors hover:text-[var(--accent)]">
+          Request Pilot →
+        </a>
+        <p>
+        <br>
+        <a href="/contact" class="nav-link transition-colors hover:text-[var(--accent)]">
+          View Example Reconstruction →
+        </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROBLEM -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Operational history fragments across systems.
+      </h2>
+
+      <div class="mt-6 grid md:grid-cols-3 max-w-4xl gap-8 text-off-white/80 text-sm">
+        <div>Version drift across tools</div>
+        <div>Device disagreement in field data</div>
+        <div>Compliance ambiguity at handoff</div>
+      </div>
+
+      <p class="mt-6 text-off-white/60 text-sm">
+        Most systems log data. Few preserve context.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- WHAT THE SYSTEM DOES -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        What the system actually does
+      </h2>
+
+      <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white/80">
+        <div>
+          <strong>Canonical ingest</strong><br/>
+          Normalizes source events into a consistent, versioned envelope.
+        </div>
+
+        <div>
+          <strong>Append-only event chain</strong><br/>
+          Each event is hashed, ordered, and fixed in sequence.
+        </div>
+
+        <div>
+          <strong>Deterministic bundle export</strong><br/>
+          Exports a reproducible snapshot of state and history.
+        </div>
+
+        <div>
+          <strong>Reproducible verification</strong><br/>
+          Any bundle can be independently validated against its chain.
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- HOW IT WORKS -->
+<section class="border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-10">
+
+    <h2 class="text-lg font-sans tracking-tight text-off-white">
+      High-level flow
+    </h2>
+
+    <div class="mt-6 text-sm text-off-white/80 space-y-2">
+      <div>Source Systems</div>
+
+      <div class="mt-6 ml-6 space-y-2">
+        <div>Canonical Event Envelope</div>
+        <div>Append-Only Chain</div>
+        <div>Deterministic Bundle</div>
+        <div>Replay / Verification</div>
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <a href="/how-it-works"
+         class="text-sm text-off-white hover:text-[var(--accent)] transition-colors">
+         How It Works →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- USE CASES -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Real world applications
+      </h2>
+
+      <div class="mt-6 grid md:grid-cols-3 gap-8 text-sm text-off-white/80">
+        <div>
+          <strong>Logistics & Shipyards</strong><br/>
+          Clarifies custody, revision lineage, and commissioning records.
+        </div>
+
+        <div>
+          <strong>Robotics & Industrial Systems</strong><br/>
+          Preserves actuator state transitions and decision context.
+        </div>
+
+        <div>
+          <strong>Energy & Infrastructure</strong><br/>
+          Creates reproducible telemetry chains across vendors.
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CREDIBILITY -->
+<section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+
+        <h2 class="text-lg font-sans tracking-tight text-off-white">
+        System foundation
+        </h2>
+
+        <div class="mt-6 text-sm text-off-white/80 flex flex-wrap gap-10">
+        <div>Open Source Kernel</div>
+        <div>Deterministic Build Pipeline</div>
+        <div>Pilot Engagement Model</div>
+        </div>
+
+        <div class="mt-10 text-xl">
+        <a href="/contact"
+            class="inline-block text-off-white hover:text-[var(--accent)] transition-colors">
+            Schedule Technical Review →
+        </a>
+        </div>
+
+    </div>
+</section>
+
+</main>
+
 </Layout>

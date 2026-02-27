@@ -1,0 +1,167 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Open Source | Prima Veritas">
+
+<main class="flex-1">
+
+  <!-- HERO -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h1 class="font-sans text-4xl md:text-5xl tracking-tight text-off-white leading-tight">
+        Open Source & Reproducibility
+      </h1>
+
+      <p class="mt-6 max-w-4xl text-xl text-off-white/80">
+        Prima Veritas publishes its core event kernel and deterministic build pipeline.
+        The verification path is inspectable and reproducible.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- KERNEL -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Prima Veritas Kernel
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          The event envelope specification, hash chaining logic, and deterministic
+          serialization engine are open and auditable.
+        </p>
+
+        <p>
+          Canonical normalization rules and hashing behavior are defined in source.
+          There is no hidden verification layer.
+        </p>
+      </div>
+
+      <div class="mt-6 text-sm text-off-white/60">
+        <code class="block">
+          https://github.com/prima-veritas/prima-veritas-kernel
+        </code>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- DETERMINISTIC BUILD -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Deterministic build process
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          Builds are reproducible from source using pinned dependencies,
+          fixed serialization rules, and hash-verified artifacts.
+        </p>
+
+        <p>
+          Given identical input state, the exported bundle hash remains stable
+          across environments.
+        </p>
+      </div>
+
+      <code class="block mt-6 text-off-white/60">
+{`$ git clone https://github.com/prima-veritas/prima-veritas-kernel
+$ make deterministic-build
+$ sha256sum bundle.pv`}
+      </code>
+    </div>
+  </section>
+
+
+  <!-- REPRODUCIBILITY MODEL -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Reproducibility model
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-6">
+
+        <div>
+          <strong>Canonical event envelope</strong>
+          <p class="mt-2">
+            Events normalize to a stable structure prior to hashing.
+            Field order and encoding are deterministic.
+          </p>
+        </div>
+
+        <div>
+          <strong>Append-only hash chain</strong>
+          <p class="mt-2">
+            Each event embeds the prior event hash.
+            Sequence integrity is mechanically verifiable.
+          </p>
+        </div>
+
+        <div>
+          <strong>Deterministic bundle export</strong>
+          <p class="mt-2">
+            Bundles serialize using fixed ordering rules.
+            Runtime variance is eliminated.
+          </p>
+        </div>
+
+        <div>
+          <strong>Independent verification</strong>
+          <p class="mt-2">
+            Any third party can reconstruct the chain and validate
+            the resulting root hash against the published digest.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- WHY OPEN -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Why open source
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          Deterministic infrastructure should not depend on opaque mechanisms.
+        </p>
+
+        <p>
+          The core verification path is public by design.
+          Commercial deployment layers remain separate from the kernel.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FINAL CTA -->
+  <section>
+    <div class="max-w-6xl mx-auto px-6 py-10">
+
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Inspect the kernel or request a pilot
+      </h2>
+
+      <div class="mt-10 text-xl">
+        <a href="/contact"
+           class="inline-block text-off-white hover:text-[var(--accent)] transition-colors">
+          Schedule Technical Review →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+</Layout>

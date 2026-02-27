@@ -1,0 +1,144 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="How It Works | Prima Veritas">
+
+<main class="flex-1">
+
+  <!-- HERO -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h1 class="font-sans text-4xl md:text-5xl tracking-tight text-off-white leading-tight">
+        How Prima Veritas Works
+      </h1>
+
+      <p class="mt-6 max-w-4xl text-xl text-off-white/80">
+        A deterministic event record built from canonical envelopes, hash-linked sequencing, and reproducible state export.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- EVENT ENVELOPE -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Event envelope structure
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          Source events are normalized into a canonical envelope format.
+          Each envelope contains timestamp, origin identifier, version metadata,
+          payload schema reference, and deterministic ordering fields.
+        </p>
+
+        <p>
+          The envelope format is stable and versioned. Schema evolution does not
+          invalidate historical events. Every record remains interpretable in context.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- HASH CHAIN -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Hash chaining
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          Each event is cryptographically hashed. The hash of the previous
+          event is included in the next record, forming an append-only chain.
+        </p>
+
+        <p>
+          Reordering, mutation, or deletion changes the chain state and
+          invalidates subsequent hashes. Integrity is intrinsic to the structure.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- DETERMINISTIC EXPORT -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Deterministic export
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          At any point in time, the full chain can be exported as a deterministic bundle.
+          The bundle includes state reconstruction rules and event history.
+        </p>
+
+        <p>
+          Given the same input chain, the export process produces identical output.
+          No hidden execution paths or nondeterministic transforms are permitted.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- VERIFICATION MODEL -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Verification model
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          Any exported bundle can be independently validated against its
+          originating chain. Verification confirms structural integrity,
+          ordering, and hash continuity.
+        </p>
+
+        <p>
+          Validation does not require access to the original operational system.
+          The record is self-sufficient.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROJECTION LAYER -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-10">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Projection layer
+      </h2>
+
+      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+        <p>
+          The event chain can be projected into domain-specific views without
+          mutating underlying history. Read models are derived, not stored.
+        </p>
+
+        <p>
+          Multiple projections may coexist. All are reproducible from the same
+          canonical chain.
+        </p>
+      </div>
+              <div class="mt-10 text-xl">
+        <a href="/contact"
+            class="inline-block text-off-white hover:text-[var(--accent)] transition-colors">
+            Schedule Technical Review →
+        </a>
+        </div>
+    </div>
+  </section>
+
+
+
+</main>
+
+</Layout>
