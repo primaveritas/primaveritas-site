@@ -1,5 +1,18 @@
 import { generateArtifact } from "artifact-core/src/index.mjs";
 
+export async function GET() {
+  return new Response(
+    JSON.stringify({
+      api: "Prima Veritas Artifact Engine",
+      status: "online"
+    }),
+    {
+      status: 200,
+      headers: { "Content-Type": "application/json" }
+    }
+  );
+}
+
 export async function POST({ request }) {
   try {
     const csv = await request.text();
