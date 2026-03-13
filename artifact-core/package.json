@@ -1,0 +1,15 @@
+{
+  "name": "prima_veritas_artifact_core",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20 <23"
+  },
+  "scripts": {
+    "test": "node tests/determinism.test.mjs && node tests/csv_validation.test.mjs"
+  },
+  "dependencies": {
+    "yazl": "2.5.1"
+  }
+}
