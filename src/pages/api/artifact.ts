@@ -1,4 +1,4 @@
-import { generateArtifact } from "artifact-core/src/index.mjs";
+import { generateArtifact } from "../../../artifact-core/src/index.mjs";
 
 export async function GET() {
   return new Response(

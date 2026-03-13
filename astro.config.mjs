@@ -6,9 +6,16 @@ export default defineConfig({
   integrations: [tailwind()],
   adapter: cloudflare(),
   output: "server",
+
   image: {
     service: {
       entrypoint: "astro/assets/services/noop"
+    }
+  },
+
+  vite: {
+    ssr: {
+      external: ["artifact-core"]
     }
   }
 });
