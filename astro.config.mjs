@@ -5,5 +5,10 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   integrations: [tailwind()],
   adapter: cloudflare(),
-  output: "server"
+  output: "server",
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/noop"
+    }
+  }
 });
