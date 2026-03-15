@@ -108,9 +108,9 @@ const { title = "Prima Veritas" } = Astro.props;
   </g>
     </svg>
   </a>
-  <button id="menu-toggle" class="md:hidden text-off-white text-xl mt-2">
-☰
-</button>
+      <button id="menu-toggle" class="md:hidden text-off-white text-3xl mt-2">
+      ☰
+      </button>
 
   <nav id="main-nav" class="hidden md:flex justify-evenly flex-1 text-[0.9rem] text-offwhite/85">
     <a href="/how-it-works" class="nav-link transition-colors hover:text-[var(--accent)]">
@@ -130,17 +130,15 @@ const { title = "Prima Veritas" } = Astro.props;
     </a>
   </nav>
 
-  <div id="mobile-menu" class="hidden flex-col text-center border-b border-white/10 md:hidden">
+      <div id="mobile-menu" class="hidden flex flex-col w-full mt-3 md:hidden">
 
-  <a href="/how-it-works" class="py-3">How It Works</a>
-  <a href="/example-reconstruction" class="py-3">Example Reconstruction</a>
-  <a href="/open-source" class="py-3">Open Source</a>
-  <a href="/about" class="py-3">About</a>
-  <a href="/contact" class="py-3">Contact</a>
+      <a href="/how-it-works" class="block py-3 text-off-white border-t border-white/10">How It Works</a>
+      <a href="/example-reconstruction" class="block py-3 text-off-white border-t border-white/10">Example Reconstruction</a>
+      <a href="/open-source" class="block py-3 text-off-white border-t border-white/10">Open Source</a>
+      <a href="/about" class="block py-3 text-off-white border-t border-white/10">About</a>
+      <a href="/contact" class="block py-3 text-off-white border-t border-white/10">Contact</a>
 
-   </div>
-
-</header>
+      </header>
 
     <slot />
 
