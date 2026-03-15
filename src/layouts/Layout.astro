@@ -108,8 +108,11 @@ const { title = "Prima Veritas" } = Astro.props;
   </g>
     </svg>
   </a>
+  <button id="menu-toggle" class="md:hidden text-off-white text-xl">
+☰
+</button>
 
-  <nav class="flex justify-evenly flex-1 text-[0.9rem] text-offwhite/85">
+  <nav id="main-nav" class="hidden md:flex justify-evenly flex-1 text-[0.9rem] text-offwhite/85">
     <a href="/how-it-works" class="nav-link transition-colors hover:text-[var(--accent)]">
       How It Works
     </a>
@@ -126,6 +129,16 @@ const { title = "Prima Veritas" } = Astro.props;
       Contact
     </a>
   </nav>
+
+  <div id="mobile-menu" class="hidden flex-col text-center border-b border-white/10 md:hidden">
+
+  <a href="/how-it-works" class="py-3">How It Works</a>
+  <a href="/example-reconstruction" class="py-3">Example Reconstruction</a>
+  <a href="/open-source" class="py-3">Open Source</a>
+  <a href="/about" class="py-3">About</a>
+  <a href="/contact" class="py-3">Contact</a>
+
+   </div>
 
 </header>
 
@@ -145,6 +158,16 @@ const { title = "Prima Veritas" } = Astro.props;
 
   </div>
 </footer>
+
+
+   <script>
+   const toggle = document.getElementById("menu-toggle");
+   const menu = document.getElementById("mobile-menu");
+
+   toggle.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+   });
+   </script>
 
   </body>
 </html>

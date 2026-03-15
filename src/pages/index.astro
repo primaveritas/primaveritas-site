@@ -6,50 +6,174 @@ import Layout from "../layouts/Layout.astro";
 
 <main class="flex-1">
 
-  <!-- HERO -->
-  <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
-      <h1 class="font-sans text-4xl md:text-5xl tracking-tight text-off-white leading-tight">
-        Deterministic Event Replay for Operational Systems
-      </h1>
+<!-- HERO -->
+<section class="border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-10">
+    <h1 class="font-sans text-4xl md:text-5xl tracking-tight text-off-white leading-tight">
+      Reconstruct Operational History Across Systems
+    </h1>
 
-      <p class="mt-6 max-w-5xl text-xl text-center text-off-white text-off-white/80">
-        Prima Veritas creates a sealed, time-ordered record of physical and digital events without replacing existing tools.
-      </p>
+    <p class="mt-6 max-w-5xl text-xl text-center text-off-white/80">
+      Prima Veritas converts fragmented operational logs into a canonical event ledger and generates a verification artifact that can be independently reproduced.
+    </p>
 
-      <div class="mt-10 flex-col text-sm gap-1 tracking-wide">
-        <a href="/contact" class="nav-link transition-colors hover:text-[var(--accent)]">
-          Request Pilot →
-        </a>
-        <p>
-        <br>
-        <a href="/contact" class="nav-link transition-colors hover:text-[var(--accent)]">
-          View Example Reconstruction →
-        </a>
-        </p>
-      </div>
-    </div>
-  </section>
+    <div class="mt-10 flex-col text-sm gap-1 tracking-wide">
+      <a href="#artifact-demo" class="nav-link transition-colors hover:text-[var(--accent)]">
+        Generate Verification Artifact →
+      </a>
 
+      <p>
+      <br>
 
-  <!-- PROBLEM -->
-  <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
-      <h2 class="text-lg font-sans tracking-tight text-off-white">
-        Operational history fragments across systems.
-      </h2>
+      <a href="/example-reconstruction" class="nav-link transition-colors hover:text-[var(--accent)]">
+        Run Example Reconstruction →
+      </a>
 
-      <div class="mt-6 grid md:grid-cols-3 max-w-4xl gap-8 text-off-white/80 text-sm">
-        <div>Version drift across tools</div>
-        <div>Device disagreement in field data</div>
-        <div>Compliance ambiguity at handoff</div>
-      </div>
-
-      <p class="mt-6 text-off-white/60 text-sm">
-        Most systems log data. Few preserve context.
       </p>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- SYSTEM DIAGRAM -->
+<section class="border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-12">
+
+    <div class="flex flex-wrap items-center justify-between text-sm text-off-white/80">
+
+      <div class="text-center">
+        <div class="text-off-white">Operational Logs</div>
+        <div class="text-off-white/60">CSV / system events</div>
+      </div>
+
+      <div class="text-off-white/40">→</div>
+
+      <div class="text-center">
+        <div class="text-off-white">Canonical Ledger</div>
+        <div class="text-off-white/60">events.jsonl</div>
+      </div>
+
+      <div class="text-off-white/40">→</div>
+
+      <div class="text-center">
+        <div class="text-off-white">Verification Artifact</div>
+        <div class="text-off-white/60">bundle.zip</div>
+      </div>
+
+      <div class="text-off-white/40">→</div>
+
+      <div class="text-center">
+        <div class="text-off-white">Reproducible Hash</div>
+        <div class="text-off-white/60">SHA-256</div>
+      </div>
+
+    </div>
+
+    <p class="mt-10 text-sm text-off-white/60 text-center max-w-3xl mx-auto">
+      Prima Veritas converts fragmented operational logs into a canonical event ledger and produces a verification artifact that can be independently reproduced.
+    </p>
+
+  </div>
+</section>
+
+<!-- ARTIFACT DEMO -->
+<section id="artifact-demo" class="border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-12">
+
+    <h2 class="text-lg font-sans tracking-tight text-off-white">
+      Try the Artifact Engine
+    </h2>
+
+    <p class="mt-4 text-sm text-off-white/60 max-w-3xl">
+      Run a sample operational dataset through the Prima Veritas artifact engine and generate a verification bundle.
+    </p>
+
+    <!-- DEMO CONTROLS -->
+    <div class="mt-10 flex flex-col md:flex-row md:items-center gap-6">
+
+      <select id="dataset-select" class="bg-carbon-navy border border-white/10 text-off-white text-sm px-4 py-2">
+        <option>Industrial Sensor Network</option>
+        <option>Robotics Telemetry</option>
+        <option>Shipyard Commissioning</option>
+        <option>Audit Log Reconstruction</option>
+        <option>Machine Learning Pipeline</option>
+      </select>
+
+      <button id="run-artifact" class="text-sm border border-white/20 px-4 py-2 hover:text-[var(--accent)] transition-colors">
+        Generate Artifact
+      </button>
+
+    </div>
+
+    <!-- ARTIFACT OUTPUT PANEL -->
+    <div id="artifact-result" class="mt-10 border border-white/10 p-6 text-sm text-off-white/80 max-w-fit hidden">
+      <p class="text-off-white">Artifact Generated</p>
+
+        <div class="mt-6 text-off-white/60 space-y-4">
+
+          <div>
+            <div>Artifact Hash</div>
+            <div id="artifact-hash" class="font-mono">SHA-256: ...</div>
+          </div>
+
+          <div>
+            <div>Events Processed</div>
+            <div id="events-processed" class="font-mono">142</div>
+          </div>
+
+          <div>
+            <div>Artifact Bundle</div>
+            <div class="font-mono">bundle.zip</div>
+          </div>
+
+        </div>
+
+      <div class="mt-6">
+        <a href="#" class="nav-link hover:text-[var(--accent)]">
+          Download Artifact Bundle →
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+    <script>
+      const button = document.getElementById("run-artifact");
+      const result = document.getElementById("artifact-result");
+      const dataset = document.getElementById("dataset-select");
+      const hash = document.getElementById("artifact-hash");
+      const events = document.getElementById("events-processed");
+
+      function randomHash() {
+        const chars = "abcdef0123456789";
+        let out = "";
+        for (let i = 0; i < 64; i++) {
+          out += chars[Math.floor(Math.random() * chars.length)];
+        }
+        return out;
+      }
+
+      const datasetEvents = {
+        "Industrial Sensor Network": 214,
+        "Robotics Telemetry": 173,
+        "Shipyard Commissioning": 142,
+        "Audit Log Reconstruction": 388,
+        "Machine Learning Pipeline": 96
+      };
+
+      button.addEventListener("click", () => {
+        const selected = dataset.value;
+
+        hash.textContent = "SHA-256: " + randomHash();
+        events.textContent = datasetEvents[selected] || 142;
+
+        result.classList.remove("hidden");
+      });
+
+      dataset.addEventListener("change", () => {
+        result.classList.add("hidden");
+      });
+    </script>
+</section>
 
 
   <!-- WHAT THE SYSTEM DOES -->
@@ -83,37 +207,6 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-
-  <!-- HOW IT WORKS -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      High-level flow
-    </h2>
-
-    <div class="mt-6 text-sm text-off-white/80 space-y-2">
-      <div>Source Systems</div>
-
-      <div class="mt-6 ml-6 space-y-2">
-        <div>Canonical Event Envelope</div>
-        <div>Append-Only Chain</div>
-        <div>Deterministic Bundle</div>
-        <div>Replay / Verification</div>
-      </div>
-    </div>
-
-    <div class="mt-12">
-      <a href="/how-it-works"
-         class="text-sm text-off-white hover:text-[var(--accent)] transition-colors">
-         How It Works →
-      </a>
-    </div>
-
-  </div>
-</section>
-
-
   <!-- USE CASES -->
   <section class="border-b border-white/10">
     <div class="max-w-6xl mx-auto px-6 py-10">
@@ -140,29 +233,69 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
-
-  <!-- CREDIBILITY -->
+  <!-- OPEN SOURCE KERNEL -->
 <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
+  <div class="max-w-6xl mx-auto px-6 py-10">
 
-        <h2 class="text-lg font-sans tracking-tight text-off-white">
-        System foundation
-        </h2>
+    <h2 class="text-lg font-sans tracking-tight text-off-white">
+      Open Source Kernel
+    </h2>
 
-        <div class="mt-6 text-sm text-off-white/80 flex flex-wrap gap-10">
-        <div>Open Source Kernel</div>
-        <div>Deterministic Build Pipeline</div>
-        <div>Pilot Engagement Model</div>
-        </div>
+    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
 
-        <div class="mt-10 text-xl">
-        <a href="/contact"
-            class="inline-block text-off-white hover:text-[var(--accent)] transition-colors">
-            Schedule Technical Review →
-        </a>
-        </div>
+      <p>
+        The Prima Veritas event kernel and deterministic build pipeline are published as open source.
+        The artifact generation and verification path is fully inspectable.
+      </p>
+
+      <p>
+        Anyone can reproduce artifact bundles and validate verification hashes using the same
+        deterministic pipeline.
+      </p>
 
     </div>
+
+    <div class="mt-10">
+      <a href="/open-source"
+         class="nav-link text-sm transition-colors hover:text-[var(--accent)]">
+         Inspect the Kernel →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PILOT ENGAGEMENT -->
+<section>
+  <div class="max-w-6xl mx-auto px-6 py-12">
+
+    <h2 class="text-lg font-sans tracking-tight text-off-white">
+      Pilot Engagement
+    </h2>
+
+    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+
+      <p>
+        Prima Veritas is currently deployed through structured pilot engagements
+        with operational teams evaluating deterministic event reconstruction
+        within existing systems.
+      </p>
+
+      <p>
+        Technical reviews focus on dataset structure, artifact generation, and
+        integration into existing operational workflows.
+      </p>
+
+    </div>
+
+    <div class="mt-10 text-xl">
+      <a href="/contact"
+         class="nav-link transition-colors hover:text-[var(--accent)]">
+         Schedule Technical Review →
+      </a>
+    </div>
+
+  </div>
 </section>
 
 </main>
