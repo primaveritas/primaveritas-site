@@ -17,7 +17,7 @@ const { title = "Prima Veritas" } = Astro.props;
   </head>
 
   <body class="bg-charcoal min-h-screen flex flex-col text-off-white"> 
-<header class="sticky top-0 z-50 p-4 flex items-center justify-evenly w-full font-sans border-b border-white/20 bg-carbon-navy tracking-wide text-offwhite/90">
+<header class="sticky top-0 z-50 p-4 flex flex-col items-start md:flex-row md:items-center md:justify-evenly w-full font-sans border-b border-white/20 bg-carbon-navy tracking-wide text-offwhite/90">
 
   <a href="/" aria-label="Prima Veritas" class="flex items-center gap-4 shrink-0 h-14">
     <svg
@@ -108,7 +108,7 @@ const { title = "Prima Veritas" } = Astro.props;
   </g>
     </svg>
   </a>
-  <button id="menu-toggle" class="md:hidden text-off-white text-xl">
+  <button id="menu-toggle" class="md:hidden text-off-white text-xl mt-2">
 ☰
 </button>
 
