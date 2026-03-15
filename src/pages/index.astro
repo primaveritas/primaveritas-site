@@ -13,11 +13,11 @@ import Layout from "../layouts/Layout.astro";
       Reconstruct Operational History Across Systems
     </h1>
 
-    <p class="mt-6 max-w-5xl text-xl text-center text-off-white/80">
-      Prima Veritas converts fragmented operational logs into a canonical event ledger and generates a verification artifact that can be independently reproduced.
+    <p class="mt-6 max-w-5xl text-xl text-off-white opacity-80">
+      Prima Veritas converts fragmented operational logs into a reproducible event ledger and verification artifact.
     </p>
 
-    <div class="mt-10 flex-col text-sm gap-1 tracking-wide">
+    <div class="mt-10 flex-col text-sm gap-1 tracking-wide text-off-white opacity-60">
       <a href="#artifact-demo" class="nav-link transition-colors hover:text-[var(--accent)]">
         Generate Verification Artifact →
       </a>
@@ -69,7 +69,7 @@ import Layout from "../layouts/Layout.astro";
     </div>
 
     <p class="mt-10 text-sm text-off-white/60 text-center max-w-3xl mx-auto">
-      Prima Veritas converts fragmented operational logs into a canonical event ledger and produces a verification artifact that can be independently reproduced.
+      The artifact pipeline converts operational logs into a reproducible event ledger and verification bundle.
     </p>
 
   </div>
@@ -80,11 +80,11 @@ import Layout from "../layouts/Layout.astro";
   <div class="max-w-6xl mx-auto px-6 py-12">
 
     <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Try the Artifact Engine
+      Run the Artifact Engine
     </h2>
 
     <p class="mt-4 text-sm text-off-white/60 max-w-3xl">
-      Run a sample operational dataset through the Prima Veritas artifact engine and generate a verification bundle.
+      Execute a sample operational dataset through the PV artifact pipeline.
     </p>
 
     <!-- DEMO CONTROLS -->
@@ -111,13 +111,18 @@ import Layout from "../layouts/Layout.astro";
         <div class="mt-6 text-off-white/60 space-y-4">
 
           <div>
-            <div>Artifact Hash</div>
-            <div id="artifact-hash" class="font-mono break-all">SHA-256: ...</div>
+            <div>Dataset</div>
+            <div id="dataset-name" class="font-mono">Shipyard Commissioning</div>
           </div>
 
           <div>
             <div>Events Processed</div>
             <div id="events-processed" class="font-mono">142</div>
+          </div>
+
+          <div>
+            <div class="font-semibold">Artifact Hash</div>
+            <div id="artifact-hash" class="font-mono break-all">SHA-256: ...</div>
           </div>
 
           <div>
@@ -137,11 +142,13 @@ import Layout from "../layouts/Layout.astro";
 
   </div>
     <script>
+      const datasetName = document.getElementById("dataset-name");
       const button = document.getElementById("run-artifact");
       const result = document.getElementById("artifact-result");
       const dataset = document.getElementById("dataset-select");
       const hash = document.getElementById("artifact-hash");
       const events = document.getElementById("events-processed");
+      
 
       function randomHash() {
         const chars = "abcdef0123456789";
@@ -163,6 +170,7 @@ import Layout from "../layouts/Layout.astro";
       button.addEventListener("click", () => {
         const selected = dataset.value;
 
+        datasetName.textContent = selected;
         hash.textContent = "SHA-256: " + randomHash();
         events.textContent = datasetEvents[selected] || 142;
 
