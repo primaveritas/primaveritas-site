@@ -13,11 +13,11 @@ import Layout from "../layouts/Layout.astro";
       Reconstruct Operational History Across Systems
     </h1>
 
-    <p class="mt-6 max-w-5xl text-xl text-off-white opacity-80">
+    <p class="mt-6 max-w-5xl text-xl text-off-white opacity-90">
       Prima Veritas converts fragmented operational logs into a reproducible event ledger and verification artifact.
     </p>
 
-    <div class="mt-10 flex-col text-sm gap-1 tracking-wide text-off-white opacity-60">
+    <div class="mt-10 flex-col text-sm gap-1 tracking-wide text-off-white opacity-75">
       <a href="#artifact-demo" class="nav-link transition-colors hover:text-[var(--accent)]">
         Generate Verification Artifact →
       </a>
@@ -34,6 +34,36 @@ import Layout from "../layouts/Layout.astro";
   </div>
 </section>
 
+<!-- WHY IT MATTERS -->
+<section class="border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-10">
+
+    <h2 class="text-lg font-sans tracking-tight text-off-white opacity-90">
+      Why it matters
+    </h2>
+
+    <div class="mt-6 max-w-4xl text-sm text-off-white opacity-75 space-y-4">
+
+      <p>
+        When operational history is unclear, teams spend time reconstructing events,
+        resolving conflicting records, and defending decisions across systems and organizations.
+      </p>
+
+      <p>
+        Prima Veritas produces a verifiable record that reduces rework, simplifies audits,
+        and removes ambiguity between parties.
+      </p>
+
+      <p>
+        Because the record is consistent and reproducible, it can support reliable analysis,
+        automation, and any system that depends on accurate historical data.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
 <!-- SYSTEM DIAGRAM -->
 <section class="border-b border-white/10">
   <div class="max-w-6xl mx-auto px-6 py-12">
@@ -41,34 +71,34 @@ import Layout from "../layouts/Layout.astro";
     <div class="flex flex-wrap items-center justify-between text-sm text-off-white/80">
 
       <div class="text-center">
-        <div class="text-off-white">Operational Logs</div>
-        <div class="text-off-white/60">CSV / system events</div>
+        <div class="text-off-white opacity-90">Operational Logs</div>
+        <div class="text-off-white opacity-75">CSV / system events</div>
       </div>
 
       <div class="text-off-white/40">→</div>
 
       <div class="text-center">
-        <div class="text-off-white">Canonical Ledger</div>
-        <div class="text-off-white/60">events.jsonl</div>
+        <div class="text-off-white opacity-90">Canonical Ledger</div>
+        <div class="text-off-white opacity-75">events.jsonl</div>
       </div>
 
       <div class="text-off-white/40">→</div>
 
       <div class="text-center">
-        <div class="text-off-white">Verification Artifact</div>
-        <div class="text-off-white/60">bundle.zip</div>
+        <div class="text-off-white opacity-90">Verification Artifact</div>
+        <div class="text-off-white opacity-75">bundle.zip</div>
       </div>
 
       <div class="text-off-white/40">→</div>
 
       <div class="text-center">
-        <div class="text-off-white">Reproducible Hash</div>
-        <div class="text-off-white/60">SHA-256</div>
+        <div class="text-off-white opacity-90">Reproducible Hash</div>
+        <div class="text-off-white opacity-75">SHA-256</div>
       </div>
 
     </div>
 
-    <p class="mt-10 text-sm text-off-white/60 text-center max-w-3xl mx-auto">
+    <p class="mt-10 text-sm text-off-white opacity-75 text-center max-w-3xl mx-auto">
       The artifact pipeline converts operational logs into a reproducible event ledger and verification bundle.
     </p>
 
@@ -79,18 +109,18 @@ import Layout from "../layouts/Layout.astro";
 <section id="artifact-demo" class="border-b border-white/10">
   <div class="max-w-6xl mx-auto px-6 py-12">
 
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
+    <h2 class="text-lg font-sans tracking-tight text-off-white opacity-90">
       Run the Artifact Engine
     </h2>
 
-    <p class="mt-4 text-sm text-off-white/60 max-w-3xl">
+    <p class="mt-4 text-sm text-off-white opacity-75 max-w-3xl">
       Execute a sample operational dataset through the PV artifact pipeline.
     </p>
 
     <!-- DEMO CONTROLS -->
     <div class="mt-10 flex flex-col md:flex-row md:items-center gap-6">
 
-      <select id="dataset-select" class="bg-carbon-navy border border-white/10 text-off-white text-sm px-4 py-2">
+      <select id="dataset-select" class="bg-charcoal border border-white/10 text-off-white opacity-90 text-sm px-4 py-2">
         <option>Industrial Sensor Network</option>
         <option>Robotics Telemetry</option>
         <option>Shipyard Commissioning</option>
@@ -98,7 +128,7 @@ import Layout from "../layouts/Layout.astro";
         <option>Machine Learning Pipeline</option>
       </select>
 
-      <button id="run-artifact" class="text-sm border border-white/20 px-4 py-2 hover:text-[var(--accent)] transition-colors">
+      <button id="run-artifact" class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 hover:text-[var(--accent)] transition-colors opacity-90">
         Generate Artifact
       </button>
 
@@ -187,11 +217,11 @@ import Layout from "../layouts/Layout.astro";
   <!-- WHAT THE SYSTEM DOES -->
   <section class="border-b border-white/10">
     <div class="max-w-6xl mx-auto px-6 py-10">
-      <h2 class="text-lg font-sans tracking-tight text-off-white">
+      <h2 class="text-lg font-sans tracking-tight text-off-white  opacity-90">
         What the system actually does
       </h2>
 
-      <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white/80">
+      <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white opacity-75">
         <div>
           <strong>Canonical ingest</strong><br/>
           Normalizes source events into a consistent, versioned envelope.
@@ -215,14 +245,49 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
+<!-- PRODUCTION CAPABILITIES -->
+<section class="border-b border-white/10">
+  <div class="max-w-6xl mx-auto px-6 py-10">
+
+    <h2 class="text-lg font-sans tracking-tight text-off-white opacity-90">
+      What this becomes in production
+    </h2>
+
+    <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white opacity-75">
+
+      <div>
+        <strong>Replayable timeline visualization</strong><br/>
+        Interactively reconstruct operational events with filtering, zoom, and cross-system traceability.
+      </div>
+
+      <div>
+        <strong>Continuous verification</strong><br/>
+        Automatically generate and validate artifacts from recurring operational data.
+      </div>
+
+      <div>
+        <strong>Audit-ready exports</strong><br/>
+        Produce structured, verifiable reports for internal review and external compliance.
+      </div>
+
+      <div>
+        <strong>Cross-system lineage</strong><br/>
+        Trace relationships between systems, teams, and events across time.
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
   <!-- USE CASES -->
   <section class="border-b border-white/10">
     <div class="max-w-6xl mx-auto px-6 py-10">
-      <h2 class="text-lg font-sans tracking-tight text-off-white">
+      <h2 class="text-lg font-sans tracking-tight text-off-white  opacity-90">
         Real world applications
       </h2>
 
-      <div class="mt-6 grid md:grid-cols-3 gap-8 text-sm text-off-white/80">
+      <div class="mt-6 grid md:grid-cols-3 gap-8 text-sm text-off-white  opacity-75">
         <div>
           <strong>Logistics & Shipyards</strong><br/>
           Clarifies custody, revision lineage, and commissioning records.
@@ -245,11 +310,11 @@ import Layout from "../layouts/Layout.astro";
 <section class="border-b border-white/10">
   <div class="max-w-6xl mx-auto px-6 py-10">
 
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
+    <h2 class="text-lg font-sans tracking-tight text-off-white opacity-90">
       Open Source Kernel
     </h2>
 
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+    <div class="mt-6 max-w-4xl text-sm text-off-white opacity-75 space-y-4">
 
       <p>
         The Prima Veritas event kernel and deterministic build pipeline are published as open source.
@@ -265,7 +330,7 @@ import Layout from "../layouts/Layout.astro";
 
     <div class="mt-10">
       <a href="/open-source"
-         class="nav-link text-sm transition-colors hover:text-[var(--accent)]">
+         class="nav-link text-sm opacity-75 transition-colors hover:text-[var(--accent)]">
          Inspect the Kernel →
       </a>
     </div>
@@ -277,11 +342,11 @@ import Layout from "../layouts/Layout.astro";
 <section>
   <div class="max-w-6xl mx-auto px-6 py-12">
 
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
+    <h2 class="text-lg font-sans tracking-tight text-off-white opacity-90">
       Pilot Engagement
     </h2>
 
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+    <div class="mt-6 max-w-4xl text-sm text-off-white opacity-75 space-y-4">
 
       <p>
         Prima Veritas is currently deployed through structured pilot engagements
@@ -298,7 +363,7 @@ import Layout from "../layouts/Layout.astro";
 
     <div class="mt-10 text-xl">
       <a href="/contact"
-         class="nav-link transition-colors hover:text-[var(--accent)]">
+         class="nav-link transition-colors opacity-75 hover:text-[var(--accent)]">
          Schedule Technical Review →
       </a>
     </div>
