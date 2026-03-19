@@ -213,8 +213,11 @@ e1034 → prev_hash: b221...`}
       </label>
 
       <button id="generate-btn"
-        class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 min-w-[180px]">
-        Generate Artifact
+        class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 min-w-[180px] flex items-center justify-center gap-2">
+        
+        <span id="btn-text">Generate Artifact</span>
+        <span id="btn-spinner" class="hidden w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>
+
       </button>
 
       <a href="/sample.csv" download
@@ -226,7 +229,28 @@ e1034 → prev_hash: b221...`}
     
       <div id="status-message" class="text-sm min-h-[1.25rem] opacity-0"></div>
 
-      <details class="text-off-white/70">
+          <!-- SUCCESS STATE -->
+    <div class="max-w-4xl">
+      <div id="result"
+        class="mt-6 border border-white/10 p-6 text-sm text-off-white/80 hidden">
+      <p class="text-off-white font-semibold mb-4">Artifact Generated Successfully
+
+      <div class="mt-6 text-off-white/60 space-y-4">
+
+        <div>
+          <div>Artifact Hash</div>
+          <div id="artifact-hash" class="font-mono break-all">—</div>
+        </div>
+
+        <div>
+          <div>Event Count</div>
+          <div id="event-count" class="font-mono">—</div>
+        </div>
+
+      </div>
+    </div>
+
+      <details class="mt-6 text-off-white/70">
         <summary class="cursor-pointer">View File Requirements</summary>
 
         <div class="mt-4 space-y-4 text-off-white/60">
@@ -265,96 +289,107 @@ e1034 → prev_hash: b221...`}
 
       </div>
 
-    <!-- SUCCESS STATE -->
-    <div class="max-w-4xl">
-      <div id="result"
-        class="mt-10 border border-white/10 p-6 text-sm text-off-white/80 hidden">
-      <p class="text-off-white">Artifact Generated Successfully</p>
-
-      <div class="mt-6 text-off-white/60 space-y-4">
-
-        <div>
-          <div>Artifact Hash</div>
-          <div id="artifact-hash" class="font-mono break-all">—</div>
-        </div>
-
-        <div>
-          <div>Event Count</div>
-          <div id="event-count" class="font-mono">—</div>
-        </div>
-
-      </div>
-    </div>
 </section>
 
-      <script>
-        const fileInput = document.querySelector('input[type="file"]');
-        const button = document.getElementById("generate-btn");
-        const statusEl = document.getElementById("status-message");
+        <script>
+          const fileInput = document.querySelector('input[type="file"]');
+          const button = document.getElementById("generate-btn");
+          const statusEl = document.getElementById("status-message");
 
-        let fileSelected = false;
-        let artifactGenerated = false;
+          let fileSelected = false;
+          let artifactGenerated = false;
 
-        fileInput.addEventListener("change", () => {
-          fileSelected = true;
-          artifactGenerated = false;
+          fileInput.addEventListener("change", () => {
+            fileSelected = true;
+            artifactGenerated = false;
 
-          const file = fileInput.files[0];
+            const file = fileInput.files[0];
 
-          statusEl.textContent = file ? file.name : "";
-          statusEl.classList.remove("opacity-0", "text-red-400");
-          statusEl.classList.add("text-off-white/60");
-        });
+            statusEl.textContent = file ? file.name : "";
+            statusEl.classList.remove("opacity-0", "text-red-400");
+            statusEl.classList.add("text-off-white/60");
 
-        button.addEventListener("click", async () => {
+            // Reset button state
+            button.disabled = false;
+            document.getElementById("btn-text").textContent = "Generate Artifact";
+            document.getElementById("btn-spinner").classList.add("hidden");
+          });
 
-          const file = fileInput.files[0];
+          button.addEventListener("click", async () => {
 
-          if (!fileSelected || !file || artifactGenerated) {
-            statusEl.textContent = "No file selected.";
-            statusEl.classList.remove("opacity-0");
-            statusEl.classList.remove("text-off-white/60");
-            statusEl.classList.add("text-red-400");
-            return;
-          }
+            const file = fileInput.files[0];
 
-          button.disabled = true;
-          button.textContent = "Generating Artifact...";
+            if (!fileSelected || !file || artifactGenerated) {
+              statusEl.textContent = "No file selected.";
+              statusEl.classList.remove("opacity-0", "text-off-white/60");
+              statusEl.classList.add("text-red-400");
+              return;
+            }
 
-          try {
-            const text = await file.text();
+            button.disabled = true;
+            document.getElementById("btn-spinner").classList.remove("hidden");
 
-            const res = await fetch("/api/artifact", {
-              method: "POST",
-              headers: {
-                "Content-Type": "text/plain"
-              },
-              body: text
-            });
+            try {
+              const text = await file.text();
 
-            const raw = await res.json();
+              const res = await fetch("/api/artifact", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "text/plain"
+                },
+                body: text
+              });
 
-            const data = {
-              status: "success",
-              artifactHash: raw.artifact_hash,
-              eventCount: raw.event_count,
-              preview: []
-            };
+              const raw = await res.json();
 
-            document.getElementById("artifact-hash").textContent = data.artifactHash;
-            document.getElementById("event-count").textContent = data.eventCount;
-            document.getElementById("result").classList.remove("hidden");
-            artifactGenerated = true;
+              // ✅ NEW: handle backend error shape
+              if (!res.ok || raw.status === "error" || raw.error) {
+                const message =
+                  raw?.error ||
+                  (Array.isArray(raw?.errors) && raw.errors.length
+                    ? raw.errors.map(e => `Row ${e.row}: ${e.reason}`).join("\n")
+                    : "Your file does not match the required format.");
 
-          } catch (err) {
-            console.error(err);
-          } finally {
-          await new Promise(r => setTimeout(r, 400));
-          button.disabled = false;
-          button.textContent = "Generate Artifact";
-        }
-        });
-      </script>
+                statusEl.textContent = message;
+                statusEl.classList.remove("opacity-0", "text-off-white/60");
+                statusEl.classList.add("text-red-400");
+                return;
+              }
+
+              const data = {
+                status: "success",
+                artifactHash: raw.artifact_hash,
+                eventCount: raw.event_count,
+                preview: []
+              };
+
+              const hashEl = document.getElementById("artifact-hash");
+
+              if (typeof data.artifactHash === "string" && data.artifactHash.length > 0) {
+                hashEl.textContent = data.artifactHash;
+              } else {
+                hashEl.textContent = "Hash unavailable";
+                hashEl.classList.add("text-off-white/50");
+              }
+
+              document.getElementById("event-count").textContent = data.eventCount;
+              document.getElementById("result").classList.remove("hidden");
+
+              artifactGenerated = true;
+
+            } catch (err) {
+              statusEl.textContent = "Network or server error";
+              statusEl.classList.remove("opacity-0", "text-off-white/60");
+              statusEl.classList.add("text-red-400");
+            } finally {
+              await new Promise(r => setTimeout(r, 400));
+              button.disabled = false;
+              document.getElementById("btn-text").textContent = "Generate Artifact";
+              document.getElementById("btn-spinner").classList.add("hidden");
+            }
+
+          });
+        </script>
 
 </main>
 
