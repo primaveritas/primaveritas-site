@@ -212,33 +212,29 @@ e1034 → prev_hash: b221...`}
         <input type="file" accept=".csv" class="hidden" />
       </label>
 
-      <button class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 opacity-60 cursor-not-allowed">
-        Generate Artifact (backend not connected)
+      <button id="generate-btn"
+        class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 min-w-[180px]">
+        Generate Artifact
       </button>
 
-      <a href="#"
-         class="nav-link text-sm opacity-75 hover:text-[var(--accent)]">
-         Download Sample CSV →
+      <a href="/sample.csv" download
+        class="nav-link text-sm opacity-75 hover:text-[var(--accent)]">
+        Download Sample CSV →
       </a>
 
     </div>
-
-    <!-- FILE REQUIREMENTS -->
-    <div class="mt-10 max-w-4xl text-sm text-off-white/80 space-y-4">
-
-      <div>
-        <strong>File Requirements</strong>
-        <ul class="mt-2 space-y-2 text-off-white/60">
-          <li>CSV format</li>
-          <li>Timestamped events</li>
-          <li>Up to 5MB per upload</li>
-        </ul>
-      </div>
+    
+      <div id="status-message" class="text-sm min-h-[1.25rem] opacity-0"></div>
 
       <details class="text-off-white/70">
-        <summary class="cursor-pointer">View Full Format Requirements</summary>
+        <summary class="cursor-pointer">View File Requirements</summary>
 
         <div class="mt-4 space-y-4 text-off-white/60">
+
+          <p><strong>Format:</strong><br/>
+          CSV format<br/>
+          Timestamped events<br/>
+          Up to 5MB per upload</p>
 
           <p><strong>Required header (exact order):</strong><br/>
           timestamp,stream_id,event_type,actor,object,notes</p>
@@ -256,28 +252,109 @@ e1034 → prev_hash: b221...`}
 
       </details>
 
-      <p>
-        Prima Veritas does not modify or infer missing data. Inputs must match the required format
-        to ensure deterministic, reproducible results.
-      </p>
+      <div class="mt-6 space-y-4 text-off-white/80">
 
-      <p>
-        Do not upload sensitive or personal data. Files are processed for demonstration purposes only.
-      </p>
+        <p>
+          Prima Veritas does not modify or infer missing data. Inputs must match the required format
+          to ensure deterministic, reproducible results.
+        </p>
 
+        <p>
+          Do not upload sensitive or personal data. Files are processed for demonstration purposes only.
+        </p>
+
+      </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="max-w-4xl">
+      <div id="result"
+        class="mt-10 border border-white/10 p-6 text-sm text-off-white/80 hidden">
+      <p class="text-off-white">Artifact Generated Successfully</p>
+
+      <div class="mt-6 text-off-white/60 space-y-4">
+
+        <div>
+          <div>Artifact Hash</div>
+          <div id="artifact-hash" class="font-mono break-all">—</div>
+        </div>
+
+        <div>
+          <div>Event Count</div>
+          <div id="event-count" class="font-mono">—</div>
+        </div>
+
+      </div>
     </div>
-
-    <!-- SUCCESS PLACEHOLDER -->
-    <div class="mt-10 border border-white/10 p-6 text-sm text-off-white/70 opacity-60">
-      Artifact Generated Successfully (placeholder)<br/>
-      Artifact Hash: —<br/>
-      Event Count: —<br/>
-      Preview: (backend not connected)
-    </div>
-
-  </div>
 </section>
 
+      <script>
+        const fileInput = document.querySelector('input[type="file"]');
+        const button = document.getElementById("generate-btn");
+        const statusEl = document.getElementById("status-message");
+
+        let fileSelected = false;
+        let artifactGenerated = false;
+
+        fileInput.addEventListener("change", () => {
+          fileSelected = true;
+          artifactGenerated = false;
+
+          const file = fileInput.files[0];
+
+          statusEl.textContent = file ? file.name : "";
+          statusEl.classList.remove("opacity-0", "text-red-400");
+          statusEl.classList.add("text-off-white/60");
+        });
+
+        button.addEventListener("click", async () => {
+
+          const file = fileInput.files[0];
+
+          if (!fileSelected || !file || artifactGenerated) {
+            statusEl.textContent = "No file selected.";
+            statusEl.classList.remove("opacity-0");
+            statusEl.classList.remove("text-off-white/60");
+            statusEl.classList.add("text-red-400");
+            return;
+          }
+
+          button.disabled = true;
+          button.textContent = "Generating Artifact...";
+
+          try {
+            const text = await file.text();
+
+            const res = await fetch("/api/artifact", {
+              method: "POST",
+              headers: {
+                "Content-Type": "text/plain"
+              },
+              body: text
+            });
+
+            const raw = await res.json();
+
+            const data = {
+              status: "success",
+              artifactHash: raw.artifact_hash,
+              eventCount: raw.event_count,
+              preview: []
+            };
+
+            document.getElementById("artifact-hash").textContent = data.artifactHash;
+            document.getElementById("event-count").textContent = data.eventCount;
+            document.getElementById("result").classList.remove("hidden");
+            artifactGenerated = true;
+
+          } catch (err) {
+            console.error(err);
+          } finally {
+          await new Promise(r => setTimeout(r, 400));
+          button.disabled = false;
+          button.textContent = "Generate Artifact";
+        }
+        });
+      </script>
 
 </main>
 
