@@ -246,7 +246,7 @@ e1034 → prev_hash: b221...`}
           <div id="event-count" class="font-mono">—</div>
         </div>
         <div class="mt-6">
-        <a href="http://18.189.1.169:3000/download/bundle.zip"
+        <a href="https://api.primaveritas.io/download/bundle.zip"
           class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 inline-block hover:text-[var(--accent)] transition-colors">
           Download Artifact
         </a>
@@ -343,7 +343,7 @@ e1034 → prev_hash: b221...`}
               const formData = new FormData();
               formData.append("file", file);
 
-              const res = await fetch("http://18.189.1.169:3000/artifact", {
+              const res = await fetch("https://api.primaveritas.io/artifact",
                 method: "POST",
                 body: formData
               });
