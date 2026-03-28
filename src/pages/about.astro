@@ -1,95 +1,159 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import Section from "../components/Section.astro";
 ---
 
 <Layout title="About | Prima Veritas">
 
 <main class="flex-1">
 
-  <!-- HERO -->
-  <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
-      <h1 class="font-sans text-4xl md:text-5xl tracking-tight text-off-white leading-tight">
-        About
-      </h1>
+  <PageHero
+    title="About"
+    subtitle="Operational experience informing deterministic infrastructure design."
+  />
 
-      <p class="mt-6 max-w-4xl text-xl text-off-white/80">
-        Operational experience informing deterministic infrastructure design.
-      </p>
-    </div>
-  </section>
+  <Section title="What Prima Veritas Is">
+    <p>
+      Prima Veritas reconstructs operational history from fragmented system data and produces
+      a record that can be independently verified.
+    </p>
+    <p>
+      It does not replace existing systems, analyze performance, or interpret outcomes.
+      It establishes a single, consistent account of what actually happened.
+    </p>
+  </Section>
 
+  <Section title="Why It Exists">
+    <p>
+      Operational systems rarely produce a complete or consistent history on their own.
+    </p>
+    <p>
+      Data is split across tools, transformed over time, and often contains gaps or
+      inconsistencies. Reconstructing events requires manual effort, assumptions, and
+      cross-team coordination.
+    </p>
+    <p>
+      This creates friction in audits, investigations, and day-to-day operations where
+      accuracy matters.
+    </p>
+    <p>
+      Prima Veritas exists to remove that ambiguity by producing a record that is
+      consistent, reproducible, and verifiable.
+    </p>
+  </Section>
 
-  <!-- BRYAN -->
-  <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
+  <Section title="How It Approaches the Problem">
+    <p>
+      Prima Veritas converts raw system data into a structured sequence of events and
+      preserves that sequence exactly as it occurred.
+    </p>
+    <p>
+      Each event is linked to the next, forming a continuous chain. If events are changed,
+      removed, or reordered, the structure no longer aligns.
+    </p>
+    <p>
+      This makes the record tamper-evident and ensures that the history can be trusted as
+      a stable reference point.
+    </p>
+  </Section>
 
-      <h2 class="text-lg font-sans tracking-tight text-off-white">
-        Bryan Ziehl
-      </h2>
+  <Section title="Verification Model">
+    <p>
+      Every reconstruction produces a portable verification bundle.
+    </p>
+    <p>
+      This bundle contains the reconstructed history along with the information needed to
+      confirm that it has not been altered.
+    </p>
+    <p>
+      Verification can be performed independently, without access to the original systems
+      that produced the data.
+    </p>
+    <p>
+      If the record has changed in any way, the verification result will not match.
+    </p>
+  </Section>
 
-      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+  <Section title="System Expansion">
+    <p>
+      Once operational history is reconstructed and verified, it becomes a reliable foundation
+      for further analysis and decision-making.
+    </p>
+    <p>
+      Teams can replay events, identify deviations, generate audit-ready outputs, and trace
+      relationships across systems — all from the same underlying record.
+    </p>
+    <p>
+      These capabilities emerge naturally from having a consistent, reproducible history,
+      rather than requiring separate systems or pipelines.
+    </p>
+  </Section>
 
-        <p>
-          Bryan Ziehl works at the intersection of maritime operations and structured systems discipline.
-        </p>
+  <Section title="Philosophy">
+    <p>
+      Prima Veritas is built on a simple principle:
+    </p>
+    <p class="text-off-white">
+      Accurate decisions require an accurate understanding of what already happened.
+    </p>
+    <p>
+      Most systems focus on collecting data or producing outputs. Few ensure that the
+      historical record itself is consistent, complete, and defensible.
+    </p>
+    <p>
+      Prima Veritas treats operational history as a first-class problem.
+    </p>
+  </Section>
 
-        <p>
-          He has supported commercial and government maritime programs across research vessels,
-          tankers, container ships, and pre-positioned assets. His experience includes sea trials on
-          newbuild vessels, Panama Canal transits involving controlled cargo, SL-7 and LMSR-class
-          activations, and government-support missions within U.S. waters.
-        </p>
+  <!-- FOUNDERS — bare for custom layout -->
+  <Section title="Founders" bare>
+    <div class="mt-10 max-w-4xl space-y-10">
 
-        <p>
-          He has worked directly with shipyard QA teams, bridge crews, inspectors, and external
-          stakeholders in regulated environments where procedural accuracy and documentation
-          integrity were critical.
-        </p>
+      <div>
+        <h3 class="text-sm font-sans tracking-tight text-off-white">Bryan Ziehl</h3>
+        <div class="mt-4 text-sm text-off-white/80 space-y-4">
+          <p>
+            Independent systems builder focused on reconstructing and verifying operational
+            history across fragmented data sources.
+          </p>
+          <p>
+            Background includes maritime operations and real-world systems where incomplete
+            or conflicting records create risk, ambiguity, and operational friction.
+          </p>
+        </div>
+      </div>
 
-        <p>
-          Repeated exposure to post-trial review, compliance verification, and cross-system
-          reconstruction led to a focus on deterministic historical systems. Prima Veritas reflects
-          that focus: objective sequencing, reproducible verification, and operational traceability
-          without workflow disruption.
-        </p>
-
+      <div>
+        <h3 class="text-sm font-sans tracking-tight text-off-white">Brookes Drew</h3>
+        <div class="mt-4 text-sm text-off-white/80 space-y-4">
+          <p>
+            Operator with experience in maritime and logistics environments where accurate
+            historical records are critical for coordination, compliance, and accountability.
+          </p>
+          <p>
+            Focuses on applying structured data reconstruction to real-world operational systems.
+          </p>
+        </div>
       </div>
 
     </div>
-  </section>
+  </Section>
 
-
-  <!-- BROOKES -->
-  <section>
-    <div class="max-w-6xl mx-auto px-6 py-10">
-
-      <h2 class="text-lg font-sans tracking-tight text-off-white">
-        Brookes
-      </h2>
-
-      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-
-        <p>
-          Brookes supports operational alignment and domain integration across pilot environments.
-        </p>
-
-        <p>
-          His role focuses on deployment coordination, stakeholder communication, and ensuring
-          that Prima Veritas integrates cleanly into existing operational contexts without
-          introducing process friction.
-        </p>
-
-        <p>
-          He works directly with operators and QA professionals to validate practical usefulness
-          prior to broader rollout. The emphasis remains on measured implementation, technical
-          clarity, and domain fit rather than feature expansion.
-        </p>
-
-      </div>
-
-    </div>
-  </section>
+  <Section title="Open Source" last={true}>
+    <p>
+      The core reconstruction pipeline is publicly available.
+    </p>
+    <p>
+      Anyone can inspect how records are built and verify results using the same process.
+    </p>
+    <a href="https://github.com/bryanziehl/prima-veritas-core"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="nav-link text-sm hover:text-[var(--accent)] transition-colors">
+      → Inspect the Kernel
+    </a>
+  </Section>
 
 </main>
 

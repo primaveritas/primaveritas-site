@@ -1,213 +1,118 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import Section from "../components/Section.astro";
 ---
 
 <Layout title="How It Works | Prima Veritas">
 
 <main class="flex-1">
 
-<!-- HOW IT WORKS INTRO -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
+  <!-- HERO -->
+  <PageHero
+    title="How Prima Veritas works"
+    subtitle="Prima Veritas reconstructs a complete, verifiable history from fragmented operational data."
+  />
 
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      How Prima Veritas works
-    </h2>
+  <!-- INTRO -->
+  <Section title="At a high level">
+    <p>
+      Under the hood, the system organizes events into a consistent structure, links them in
+      sequence, and produces a result that can be reproduced and independently verified.
+    </p>
+    <p>
+      Prima Veritas operates as a parallel layer alongside existing systems — it does not
+      replace them.
+    </p>
+    <p>
+      This page explains how the system works at a technical level. You do not need to
+      understand every detail to use Prima Veritas.
+    </p>
+    <p>The system performs three core functions:</p>
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ Structures events so they can be understood consistently</li>
+      <li>→ Links them in sequence so history cannot be altered without detection</li>
+      <li>→ Exports a verifiable result that can be reproduced and independently checked</li>
+    </ul>
+  </Section>
 
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+  <!-- EVENT ENVELOPE -->
+  <Section title="Event envelope structure">
+    <p class="text-off-white/60 italic">
+      Defines how each event is structured so it can be understood consistently over time.
+    </p>
+    <p>
+      Source events are normalized into a canonical envelope format. Each envelope contains
+      timestamp, origin identifier, version metadata, payload schema reference, and ordering
+      fields.
+    </p>
+    <p>
+      The envelope format is stable and versioned. Schema evolution does not invalidate
+      historical events. Every record remains interpretable in context.
+    </p>
+  </Section>
 
-      <p>
-        Prima Veritas creates a complete, verifiable record of what actually happened
-        in a workflow, even when data is fragmented across multiple sources.
-      </p>
+  <!-- HASH CHAINING -->
+  <Section title="Hash chaining">
+    <p class="text-off-white/60 italic">
+      Prevents changes to historical records from going undetected.
+    </p>
+    <p>
+      Each event is cryptographically hashed and linked to the next. The hash of the previous
+      event is included in the next record, forming an append-only sequence.
+    </p>
+    <p>
+      Reordering, tampering, or deletion changes the chain state and invalidates subsequent
+      hashes.
+    </p>
+    <p>
+      Even small, unintended changes to historical data will alter the chain and become
+      detectable.
+    </p>
+    <p>
+      Integrity is enforced by the structure itself.
+    </p>
+  </Section>
 
-      <p>
-        This page explains how the system works at a technical level. You do not need
-        to understand every detail to use Prima Veritas.
-      </p>
+  <!-- REPRODUCIBLE EXPORT -->
+  <Section title="Reproducible export">
+    <p class="text-off-white/60 italic">
+      Guarantees the same input always produces the same result — every time.
+    </p>
+    <p>
+      At any point in time, the full chain can be exported as a verification bundle. The bundle
+      includes event history and reconstruction rules.
+    </p>
+    <p>
+      Given the same input, the export process produces identical output. No hidden execution
+      paths or nondeterministic transforms are permitted.
+    </p>
+    <p>
+      The system does not infer or fill missing data. Outputs are derived strictly from the
+      recorded event sequence.
+    </p>
+  </Section>
 
-      <p>
-        Prima Veritas works with standard exported operational data, such as CSV or JSON files.
-      </p>
-
-      <p>
-        Prima Veritas builds a deterministic event record from canonical envelopes,
-        hash-linked sequencing, and reproducible state export.
-      </p>
-
-      <p>
-        This structure allows fragmented operational data to be reconstructed into a
-        single, verifiable history.
-      </p>
-
-      <p>
-        Prima Veritas operates as a parallel layer alongside existing systems.
-      </p>
-
-    </div>
-
-  </div>
-</section>
-
-
-<!-- EVENT ENVELOPE -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Event envelope structure
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-
-      <p>
-        Ensures every event is consistently structured and interpretable over time.
-      </p>
-
-      <p>
-        Source events are normalized into a canonical envelope format. Each envelope
-        contains timestamp, origin identifier, version metadata, payload schema reference,
-        and deterministic ordering fields.
-      </p>
-
-      <p>
-        The envelope format is stable and versioned. Schema evolution does not invalidate
-        historical events. Every record remains interpretable in context.
-      </p>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- HASH CHAIN -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Hash chaining
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-
-      <p>
-        Prevents undetected changes to historical records.
-      </p>
-
-      <p>
-        Each event is cryptographically hashed. The hash of the previous event is included
-        in the next record, forming an append-only chain.
-      </p>
-
-      <p>
-        Reordering, mutation, or deletion changes the chain state and invalidates
-        subsequent hashes. Integrity is intrinsic to the structure.
-      </p>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- DETERMINISTIC EXPORT -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Deterministic export
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-
-      <p>
-        Guarantees the same input always produces the same result, every time.
-      </p>
-
-      <p>
-        At any point in time, the full chain can be exported as a deterministic bundle.
-        The bundle includes state reconstruction rules and event history.
-      </p>
-
-      <p>
-        Given the same input chain, the export process produces identical output.
-        No hidden execution paths or nondeterministic transforms are permitted.
-      </p>
-
-      <p>
-        The system does not infer or fill missing data. Outputs are derived strictly
-        from the recorded event sequence.
-      </p>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- VERIFICATION MODEL -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Verification model
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-
-      <p>
-        Allows any party to independently confirm the record is correct.
-      </p>
-
-      <p>
-        Any exported bundle can be independently validated against its originating chain.
-        Verification confirms structural integrity, ordering, and hash continuity.
-      </p>
-
-      <p>
-        Validation does not require access to the original operational system.
-        The record is self-sufficient.
-      </p>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- PROJECTION LAYER -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Projection layer
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-
-      <p>
-        Enables different views of the same system without altering the underlying history.
-      </p>
-
-      <p>
-        The event chain can be projected into domain-specific views without mutating
-        underlying history. Read models are derived, not stored.
-      </p>
-
-      <p>
-        Multiple projections may coexist. All are reproducible from the same canonical chain.
-      </p>
-
-      <p>
-        The result is a system where operational history can be reconstructed, verified,
-        and trusted without relying on the original environment.
-      </p>
-
-    </div>
-
-    <div class="mt-10 text-xl">
-      <a href="/contact"
-         class="nav-link transition-colors opacity-75 hover:text-[var(--accent)]">
-         Schedule Technical Review →
-      </a>
-    </div>
-
-  </div>
-</section>
-
-
+  <!-- VERIFICATION MODEL -->
+  <Section title="Verification model" last={true}>
+    <p class="text-off-white/60 italic">
+      Allows any party to independently confirm that the record is correct.
+    </p>
+    <p>Each verification bundle can be checked to confirm that:</p>
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ the event history is complete</li>
+      <li>→ the sequence has not been altered</li>
+      <li>→ no records have been added, removed, or changed</li>
+    </ul>
+    <p>
+      Verification does not require access to the systems that originally produced the data.
+      The bundle contains everything needed to confirm its integrity.
+    </p>
+    <a href="/contact"
+      class="nav-link text-sm hover:text-[var(--accent)] transition-colors">
+      → Schedule a Technical Review
+    </a>
+  </Section>
 
 </main>
 

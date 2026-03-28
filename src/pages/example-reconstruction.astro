@@ -1,59 +1,34 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import Section from "../components/Section.astro";
 ---
 
 <Layout title="Example Reconstruction | Prima Veritas">
 
 <main class="flex-1">
 
-  <!-- HERO -->
-  <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
-      <h1 class="font-sans text-4xl md:text-5xl tracking-tight text-off-white leading-tight">
-        Example Reconstruction
-      </h1>
+  <PageHero
+    title="Example Reconstruction"
+    subtitle="A concrete example of how fragmented operational history becomes a sealed, reproducible sequence."
+  />
 
-      <p class="mt-6 max-w-4xl text-xl text-off-white/80">
-        A concrete example of how a fragmented operational event history becomes a sealed, reproducible chain.
-      </p>
-    </div>
-  </section>
+  <Section title="Scenario">
+    <p>
+      A set of operational logs tracks updates to an order across multiple systems: an order
+      management system, a customer support dashboard, and a fulfillment or shipping tool.
+    </p>
+    <p>
+      Each system records events independently. Timestamps drift. Field formats differ.
+      Identifiers are inconsistent. No single system preserves the full history.
+    </p>
+    <p>
+      The result is a fragmented view of what actually happened.
+    </p>
+  </Section>
 
-
-<!-- SCENARIO -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Scenario
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-      <p>
-        A set of operational logs tracks updates to an order across multiple systems:
-        order management, customer support, and fulfillment.
-      </p>
-
-      <p>
-        Each system records events independently. Timestamps drift. Field formats differ.
-        Identifiers are inconsistent. No single system preserves the full history.
-      </p>
-
-      <p>
-        The result is a fragmented view of what actually happened.
-      </p>
-    </div>
-  </div>
-</section>
-
-
-<!-- RAW INTAKE -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Raw intake
-    </h2>
-
+  <!-- RAW INTAKE — bare for grid layout -->
+  <Section title="Raw Intake" bare>
     <div class="mt-6 grid md:grid-cols-3 gap-10 max-w-5xl text-sm text-off-white/80">
 
       <div>
@@ -91,336 +66,341 @@ import Layout from "../layouts/Layout.astro";
         <li>Events spread across unrelated systems</li>
       </ul>
     </div>
+  </Section>
 
-  </div>
-</section>
-
-
-<!-- CANONICAL EVENT ENVELOPE -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Canonical envelope normalization
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-      <p>
-        Each raw record is transformed into a canonical envelope: unified timestamp,
-        source identifier, schema version, and structured payload.
-      </p>
-
-      <code class="block mt-4 text-off-white/60">
+  <Section title="Canonical Envelope Normalization">
+    <p>
+      Each raw record is transformed into a canonical structure with a unified timestamp,
+      source identifier, schema version, and structured payload.
+    </p>
+    <code class="block mt-4 text-off-white/60">
 {`{
   event_id: "e1032",
   source: "order.system",
   timestamp: "2026-04-12T14:02:11Z",
-  payload: {
-    order_id: "7421",
-    status: "CREATED"
-  }
+  payload: { order_id: "7421", status: "CREATED" }
 }`}
-      </code>
-    </div>
-  </div>
-</section>
+    </code>
+  </Section>
 
-<!-- EVENT CHAIN -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Event chain construction
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-      <p>
-        Each envelope is hashed. The hash of the prior event is embedded in the next.
-        Order is explicit. Mutation invalidates the sequence.
-      </p>
-
-      <code class="block mt-4 text-off-white/60">
+  <Section title="Event Chain Construction">
+    <p>
+      Each event is hashed. The hash of the prior event is embedded in the next.
+      Order is explicit.
+    </p>
+    <p>
+      Any change to the sequence breaks its integrity.
+    </p>
+    <code class="block mt-4 text-off-white/60">
 {`e1032 → hash: a94f...
 e1033 → prev_hash: a94f...
 e1034 → prev_hash: b221...`}
-      </code>
-    </div>
-  </div>
-</section>
+    </code>
+  </Section>
 
-
-<!-- RECONSTRUCTION -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Deterministic reconstruction
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-      <p>
-        From the ordered chain, system state at any point in time can be reconstructed.
-      </p>
-
-      <p>
-        Order creation, address changes, support intervention, and delivery attempts
-        are derived from a single unified history.
-      </p>
-
-      <p>
-        Given the same input chain, reconstruction output is identical across environments.
-      </p>
-    </div>
-  </div>
-</section>
-
-
-<!-- VERIFICATION -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Independent verification
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-      <p>
-        The final bundle contains the full event sequence and hash lineage.
-      </p>
-
-      <p>
-        A third party can validate structural integrity and ordering without access
-        to the original systems.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- RUN YOUR OWN RECONSTRUCTION -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-12">
-
-    <h2 class="text-lg font-sans tracking-tight text-off-white">
-      Generate Verification Artifact
-    </h2>
-
-    <p class="mt-4 max-w-4xl text-sm text-off-white/80">
-      Upload a CSV to generate a deterministic verification artifact.
+  <Section title="Deterministic Reconstruction">
+    <p>
+      From the ordered sequence, system state at any point in time can be reconstructed.
     </p>
+    <p>
+      Order creation, address changes, support intervention, and delivery attempts are
+      derived from a single unified history.
+    </p>
+    <p>
+      Given the same input, reconstruction output is identical across environments.
+    </p>
+  </Section>
 
-    <!-- UPLOAD -->
-    <div class="mt-10 flex flex-col md:flex-row md:items-center gap-6">
+  <Section title="Independent Verification">
+    <p>
+      The final output contains the full event sequence along with its integrity structure.
+    </p>
+    <p>
+      A third party can verify that the sequence is complete, ordered, and unchanged —
+      without access to the original systems.
+    </p>
+    <p>
+      If any part of the sequence has been altered, the verification result will not match.
+    </p>
+  </Section>
 
-      <label class="bg-charcoal border border-white/10 text-off-white text-sm px-4 py-2 cursor-pointer hover:text-[var(--accent)] transition-colors">
-        Select CSV File
-        <input type="file" accept=".csv" class="hidden" />
-      </label>
+  <!-- GENERATE ARTIFACT — stays raw due to JS and complex layout -->
+  <section class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-12">
 
-      <button id="generate-btn"
-        class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 min-w-[180px] flex items-center justify-center gap-2">
-        
-        <span id="btn-text">Generate Artifact</span>
-        <span id="btn-spinner" class="hidden w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        Generate a Verified Record
+      </h2>
 
-      </button>
+      <p class="mt-4 max-w-4xl text-sm text-off-white/80">
+        Upload a CSV to reconstruct and verify a complete event history.
+      </p>
 
-      <a href="/sample.csv" download
-        class="nav-link text-sm opacity-75 hover:text-[var(--accent)]">
-        Download Sample CSV →
-      </a>
+      <!-- UPLOAD -->
+      <div class="mt-10 flex flex-col md:flex-row md:items-center gap-6">
 
-    </div>
-    
+        <label class="bg-charcoal border border-white/10 text-off-white text-sm px-4 py-2 cursor-pointer hover:text-[var(--accent)] transition-colors">
+          Select CSV File
+          <input type="file" accept=".csv" class="hidden" />
+        </label>
+
+        <button id="generate-btn"
+          class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 min-w-[180px] flex items-center justify-center gap-2">
+          <span id="btn-text">Generate Artifact</span>
+          <span id="btn-spinner" class="hidden w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>
+        </button>
+
+        <a href="/sample.csv" download
+          class="nav-link text-sm opacity-75 hover:text-[var(--accent)]">
+          Download Sample CSV →
+        </a>
+
+      </div>
+
       <div id="status-message" class="text-sm min-h-[1.25rem] opacity-0"></div>
 
-          <!-- SUCCESS STATE -->
-    <div class="max-w-4xl">
-      <div id="result"
-        class="mt-6 border border-white/10 p-6 text-sm text-off-white/80 hidden">
-      <p class="text-off-white font-semibold mb-4">Artifact Generated Successfully</p>
+      <!-- SUCCESS STATE -->
+      <div class="max-w-4xl">
+        <div id="result"
+          class="mt-6 border border-white/10 p-6 text-sm text-off-white/80 hidden">
+          <p class="text-off-white font-semibold mb-2">Artifact Generated Successfully</p>
+          <p class="text-off-white/70 mb-4">
+            Artifact generated successfully. Your dataset has been reconstructed into a deterministic event sequence.
+          </p>
 
-      <div class="mt-6 text-off-white/60 space-y-4">
-        <div>
-          <div>Artifact Hash</div>
-          <div id="artifact-hash" class="font-mono break-all">—</div>
-        </div>
+          <div class="mt-6 text-off-white/60 space-y-4">
+            <div>
+              <div>Artifact Hash</div>
+              <div id="artifact-hash" class="font-mono break-all">—</div>
+            </div>
 
-        <div>
-          <div>Event Count</div>
-          <div id="event-count" class="font-mono">—</div>
+            <div>
+              <div>Event Count</div>
+              <div id="event-count" class="font-mono">—</div>
+            </div>
+
+            <div id="preview-section" class="mt-6 hidden">
+              <div class="text-off-white mb-2">Preview of reconstructed events</div>
+              <pre id="preview-content" class="text-off-white/60 whitespace-pre-wrap"></pre>
+            </div>
+
+            <div class="mt-6">
+              <a href="https://api.primaveritas.io/download/bundle.zip"
+                class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 inline-block hover:text-[var(--accent)] transition-colors">
+                Download Artifact
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="mt-6">
-        <a href="https://api.primaveritas.io/download/bundle.zip"
-          class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 inline-block hover:text-[var(--accent)] transition-colors">
-          Download Artifact
-        </a>
       </div>
 
-      </div>
-    </div>
-  </div>
-  
-      <!-- Error Section -->
+      <!-- ERROR SECTION -->
       <div id="error-section" class="mt-6 border border-red-400/30 p-6 text-sm hidden max-w-4xl">
-        <p class="text-red-400 font-semibold mb-4">Upload Failed</p>
+        <p class="text-red-400 font-semibold mb-2">Upload Failed</p>
+        <p class="text-red-400/80 mb-4">
+          We found issues with your file — see details below
+        </p>
         <ul id="error-list" class="space-y-4 text-off-white/70"></ul>
       </div>
 
+      <!-- FILE REQUIREMENTS -->
       <details class="mt-6 text-off-white/70">
         <summary class="cursor-pointer">View File Requirements</summary>
 
-      <div class="mt-4 space-y-4 text-off-white/60">
+        <div class="mt-4 space-y-6 text-off-white/60">
 
-        <p><strong>Required Fields</strong><br/>
-        Your CSV must include the following columns:<br/>
-        timestamp, stream_id, event_type, actor, object, notes</p>
+          <div>
+            <strong class="text-off-white/80">Required Fields</strong>
+            <p class="mt-2">
+              For demonstration purposes, the system expects a minimal set of fields that define an event:
+            </p>
+            <ul class="mt-3 space-y-1 font-mono text-off-white/50">
+              <li>timestamp</li>
+              <li>stream_id</li>
+              <li>event_type</li>
+              <li>actor</li>
+              <li>object</li>
+              <li>notes</li>
+            </ul>
+            <p class="mt-3">
+              These fields capture the essentials needed to reconstruct a reliable event sequence:
+              when something happened, what occurred, and what it affected.
+            </p>
+            <p class="mt-2">
+              Column order does not matter. All required fields must be present.
+            </p>
+          </div>
 
-        <p>Column order does not matter.<br/>
-        Additional columns are not currently supported.<br/>
-        All required fields must be present.</p>
+          <div>
+            <strong class="text-off-white/80">Format Notes</strong>
+            <p class="mt-2">
+              This example uses a simplified input format to keep the reconstruction process clear
+              and predictable.
+            </p>
+            <p class="mt-2">
+              In real deployments, data can include additional fields and more complex structures.
+              Those are mapped into the system during integration.
+            </p>
+          </div>
 
-        <p>Timestamps must be ISO 8601 with timezone.<br/>
-        Example: 2024-01-01T10:00:00Z</p>
+          <div>
+            <strong class="text-off-white/80">Timestamp Requirements</strong>
+            <p class="mt-2">
+              Timestamps must be ISO 8601 with timezone.
+            </p>
+            <p class="mt-1">
+              Example: <code class="text-off-white/50">2024-01-01T10:00:00Z</code>
+            </p>
+          </div>
 
-      </div>
-
+        </div>
       </details>
 
       <div class="mt-6 space-y-4 text-off-white/80">
-
         <p>
-          Prima Veritas does not modify or infer missing data. Inputs must match the required format
-          to ensure deterministic, reproducible results.
+          Prima Veritas does not modify or infer missing data. Inputs must match the required
+          format to ensure reproducible results.
         </p>
-
         <p>
           Do not upload sensitive or personal data. Files are processed for demonstration purposes only.
         </p>
-
       </div>
 
-</section>
+    </div>
+  </section>
 
-        <script>
-          const fileInput = document.querySelector('input[type="file"]');
-          const button = document.getElementById("generate-btn");
-          const statusEl = document.getElementById("status-message");
+  <script>
+    const fileInput = document.querySelector('input[type="file"]');
+    const button = document.getElementById("generate-btn");
+    const statusEl = document.getElementById("status-message");
 
-          let fileSelected = false;
-          let artifactGenerated = false;
+    let fileSelected = false;
+    let artifactGenerated = false;
 
-          fileInput.addEventListener("change", () => {
-            fileSelected = true;
-            artifactGenerated = false;
+    fileInput.addEventListener("change", () => {
+      fileSelected = true;
+      artifactGenerated = false;
 
-            const file = fileInput.files[0];
+      const file = fileInput.files[0];
 
-            statusEl.textContent = file ? file.name : "";
-            statusEl.classList.remove("opacity-0", "text-red-400");
-            statusEl.classList.add("text-off-white/60");
+      statusEl.textContent = file ? file.name : "";
+      statusEl.classList.remove("opacity-0", "text-red-400");
+      statusEl.classList.add("text-off-white/60");
 
-            // Reset button state
-            button.disabled = false;
-            document.getElementById("btn-text").textContent = "Generate Artifact";
-            document.getElementById("btn-spinner").classList.add("hidden");
+      button.disabled = false;
+      document.getElementById("btn-text").textContent = "Generate Artifact";
+      document.getElementById("btn-spinner").classList.add("hidden");
 
-            // Reset error section
-            document.getElementById("error-section").classList.add("hidden");
-            document.getElementById("error-list").innerHTML = "";
-          });
+      document.getElementById("error-section").classList.add("hidden");
+      document.getElementById("error-list").innerHTML = "";
+    });
 
-          button.addEventListener("click", async () => {
+    button.addEventListener("click", async () => {
 
-            const file = fileInput.files[0];
+      const file = fileInput.files[0];
 
-            if (!fileSelected || !file || artifactGenerated) {
-              statusEl.textContent = "No file selected.";
-              statusEl.classList.remove("opacity-0", "text-off-white/60");
-              statusEl.classList.add("text-red-400");
-              return;
-            }
+      if (!fileSelected || !file || artifactGenerated) {
+        statusEl.textContent = "No file selected.";
+        statusEl.classList.remove("opacity-0", "text-off-white/60");
+        statusEl.classList.add("text-red-400");
+        return;
+      }
 
-            button.disabled = true;
-            document.getElementById("btn-spinner").classList.remove("hidden");
+      button.disabled = true;
+      document.getElementById("btn-spinner").classList.remove("hidden");
 
-            try {
-              const formData = new FormData();
-              formData.append("file", file);
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
 
-              const res = await fetch("https://api.primaveritas.io/artifact", {
-                method: "POST",
-                body: formData
-              });
+        const res = await fetch("https://api.primaveritas.io/artifact", {
+          method: "POST",
+          body: formData
+        });
 
-              const raw = await res.json();
+        const raw = await res.json();
 
-              //  NEW: handle backend error shape
-              if (!res.ok || raw.status === "error") {
-                if (Array.isArray(raw.errors)) {
-                  const errorSection = document.getElementById("error-section");
-                  const errorList = document.getElementById("error-list");
+        if (!res.ok || raw.status === "error") {
+          if (Array.isArray(raw.errors)) {
+            const errorSection = document.getElementById("error-section");
+            const errorList = document.getElementById("error-list");
 
-                  errorList.innerHTML = raw.errors.map(e => {
-                    let message = "";
-                    let fix = "";
+            errorList.innerHTML = raw.errors.map(e => {
+              let message = "";
+              let fix = "";
 
-                    if (e.field === "timestamp" && e.reason === "missing_value") {
-                      message = "Row " + e.row + " is missing a timestamp.";
-                      fix = "Add one like 2024-01-01T10:00:00Z.";
-                    } else if (e.field === "timestamp" && e.reason === "invalid_value") {
-                      message = "Row " + e.row + " has an invalid timestamp.";
-                      fix = "Use ISO format like 2024-01-01T10:00:00Z.";
-                    } else if (e.reason === "missing_columns" || e.field === "header") {
-                      message = "Your CSV is missing required columns.";
-                      fix = "Make sure it includes: timestamp, stream_id, event_type, actor, object, notes.";
-                    } else if (e.reason === "column_count_mismatch") {
-                      message = "Row " + e.row + " does not match the expected structure.";
-                      fix = "Each row must contain exactly 6 columns.";
-                    } else {
-                      message = e.hint || "An unexpected error occurred.";
-                      fix = "";
-                    }
-
-                    let fixHtml = "";
-                    if (fix) {
-                      fixHtml = '<div class="text-off-white/50">' + fix + '</div>';
-                    }
-
-                    return '<li class="space-y-1"><div class="text-off-white/80">' + message + '</div>' + fixHtml + '</li>';
-                  }).join("");
-
-                  errorSection.classList.remove("hidden");
-                } else {
-                  statusEl.textContent = "Unknown error";
-                  statusEl.classList.remove("opacity-0", "text-off-white/60");
-                  statusEl.classList.add("text-red-400");
-                }
-                return;
-              }
-
-              const hashEl = document.getElementById("artifact-hash");
-
-              if (typeof raw.artifact_hash === "string" && raw.artifact_hash.length > 0) {
-                hashEl.textContent = raw.artifact_hash;
+              if (e.field === "timestamp" && e.reason === "missing_value") {
+                message = "Row " + e.row + " is missing a timestamp.";
+                fix = "Add one like 2024-01-01T10:00:00Z.";
+              } else if (e.field === "timestamp" && e.reason === "invalid_value") {
+                message = "Row " + e.row + " has an invalid timestamp.";
+                fix = "Use ISO format like 2024-01-01T10:00:00Z.";
+              } else if (e.reason === "missing_columns" || e.field === "header") {
+                message = "Your CSV is missing required columns.";
+                fix = "Make sure it includes: timestamp, stream_id, event_type, actor, object, notes.";
+              } else if (e.reason === "column_count_mismatch") {
+                message = "Row " + e.row + " does not match the expected structure.";
+                fix = "Each row must contain exactly 6 columns.";
               } else {
-                hashEl.textContent = "Hash unavailable";
-                hashEl.classList.add("text-off-white/50");
+                message = e.hint || "An unexpected error occurred.";
+                fix = "";
               }
 
-              document.getElementById("event-count").textContent = raw.event_count;
-              document.getElementById("result").classList.remove("hidden");
+              let fixHtml = "";
+              if (fix) {
+                fixHtml = '<div class="text-off-white/50">' + fix + '</div>';
+              }
 
-              artifactGenerated = true;
+              return '<li class="space-y-1"><div class="text-off-white/80">' + message + '</div>' + fixHtml + '</li>';
+            }).join("");
 
-            } catch (err) {
-              statusEl.textContent = "Network or server error";
-              statusEl.classList.remove("opacity-0", "text-off-white/60");
-              statusEl.classList.add("text-red-400");
-            } finally {
-              await new Promise(r => setTimeout(r, 400));
-              button.disabled = false;
-              document.getElementById("btn-text").textContent = "Generate Artifact";
-              document.getElementById("btn-spinner").classList.add("hidden");
-            }
+            errorSection.classList.remove("hidden");
+          } else {
+            statusEl.textContent = "Unknown error";
+            statusEl.classList.remove("opacity-0", "text-off-white/60");
+            statusEl.classList.add("text-red-400");
+          }
+          return;
+        }
 
-          });
-        </script>
+        const hashEl = document.getElementById("artifact-hash");
+
+        if (typeof raw.artifact_hash === "string" && raw.artifact_hash.length > 0) {
+          hashEl.textContent = raw.artifact_hash;
+        } else {
+          hashEl.textContent = "Hash unavailable";
+          hashEl.classList.add("text-off-white/50");
+        }
+
+        document.getElementById("event-count").textContent = raw.event_count;
+        document.getElementById("result").classList.remove("hidden");
+
+        const previewSection = document.getElementById("preview-section");
+        const previewContent = document.getElementById("preview-content");
+
+        if (Array.isArray(raw.preview) && raw.preview.length > 0) {
+          previewContent.textContent = raw.preview.slice(0, 10).join("\n");
+          previewSection.classList.remove("hidden");
+        } else {
+          previewContent.textContent = "Preview not available.";
+          previewSection.classList.remove("hidden");
+        }
+
+        artifactGenerated = true;
+
+      } catch (err) {
+        statusEl.textContent = "Network or server error";
+        statusEl.classList.remove("opacity-0", "text-off-white/60");
+        statusEl.classList.add("text-red-400");
+      } finally {
+        await new Promise(r => setTimeout(r, 400));
+        button.disabled = false;
+        document.getElementById("btn-text").textContent = "Generate Artifact";
+        document.getElementById("btn-spinner").classList.add("hidden");
+      }
+
+    });
+  </script>
 
 </main>
 

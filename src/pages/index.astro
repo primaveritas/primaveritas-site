@@ -1,74 +1,42 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import Section from "../components/Section.astro";
 ---
 
 <Layout title="Prima Veritas">
 
 <main class="flex-1">
 
-<!-- HERO -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-    <h1 class="font-sans text-4xl md:text-5xl tracking-tight text-off-white leading-tight">
-      Reconstruct Operational History Across Systems
-    </h1>
+  <!-- HERO -->
+  <PageHero
+    title="Reconstruct Operational History Across Systems"
+    subtitle="Prima Veritas converts fragmented operational logs into a reproducible, verifiable history of events."
+  />
 
-    <p class="mt-6 max-w-5xl text-xl text-off-white opacity-90">
-      Prima Veritas converts fragmented operational logs into a reproducible event ledger and verification artifact.
+  <!-- WHY IT MATTERS -->
+  <Section title="Why it matters">
+    <p>
+      When operational history is unclear, teams waste time reconstructing events,
+      resolving conflicting records, and defending decisions across systems.
+    </p>
+    <p>
+      Prima Veritas produces a verifiable record that reduces rework, simplifies audits,
+      and removes ambiguity between teams.
+    </p>
+    <p>
+      Because the record is consistent and reproducible, it supports reliable analysis,
+      automation, and any system that depends on accurate historical data.
+    </p>
+  </Section>
+
+  <!-- DIAGRAM -->
+  <Section title="From scattered logs to a verifiable history" bare>
+    <p class="mt-4 text-sm text-off-white/80">
+      This is how fragmented records become a single, reliable history.
     </p>
 
-    <div class="mt-10 flex-col text-sm gap-1 tracking-wide text-off-white opacity-75">
-      <a href="#artifact-demo" class="nav-link transition-colors hover:text-[var(--accent)]">
-        Generate Verification Artifact →
-      </a>
-
-      <p>
-      <br>
-
-      <a href="/example-reconstruction" class="nav-link transition-colors hover:text-[var(--accent)]">
-        Run Example Reconstruction →
-      </a>
-
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- WHY IT MATTERS -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-
-    <h2 class="text-lg font-sans tracking-tight text-off-white opacity-90">
-      Why it matters
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white opacity-75 space-y-4">
-
-      <p>
-        When operational history is unclear, teams spend time reconstructing events,
-        resolving conflicting records, and defending decisions across systems and organizations.
-      </p>
-
-      <p>
-        Prima Veritas produces a verifiable record that reduces rework, simplifies audits,
-        and removes ambiguity between parties.
-      </p>
-
-      <p>
-        Because the record is consistent and reproducible, it can support reliable analysis,
-        automation, and any system that depends on accurate historical data.
-      </p>
-
-    </div>
-
-  </div>
-</section>
-
-<!-- SYSTEM DIAGRAM -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-12">
-
-    <div class="flex flex-wrap items-center justify-between text-sm text-off-white/80">
+    <div class="mt-10 flex flex-wrap items-center justify-between text-sm text-off-white/80">
 
       <div class="text-center">
         <div class="text-off-white opacity-90">Operational Logs</div>
@@ -78,99 +46,108 @@ import Layout from "../layouts/Layout.astro";
       <div class="text-off-white/40">→</div>
 
       <div class="text-center">
-        <div class="text-off-white opacity-90">Canonical Ledger</div>
+        <div class="text-off-white opacity-90">Structured Event History</div>
         <div class="text-off-white opacity-75">events.jsonl</div>
       </div>
 
       <div class="text-off-white/40">→</div>
 
       <div class="text-center">
-        <div class="text-off-white opacity-90">Verification Artifact</div>
+        <div class="text-off-white opacity-90">Verification Bundle</div>
         <div class="text-off-white opacity-75">bundle.zip</div>
       </div>
 
       <div class="text-off-white/40">→</div>
 
       <div class="text-center">
-        <div class="text-off-white opacity-90">Reproducible Hash</div>
+        <div class="text-off-white opacity-90">Integrity Hash</div>
         <div class="text-off-white opacity-75">SHA-256</div>
       </div>
 
     </div>
 
-    <p class="mt-10 text-sm text-off-white opacity-75 text-center max-w-3xl mx-auto">
-      The artifact pipeline converts operational logs into a reproducible event ledger and verification bundle.
+    <p class="mt-10 text-sm text-off-white/75 text-center max-w-3xl mx-auto">
+      Prima Veritas converts fragmented operational logs into a structured, verifiable history
+      and a portable verification bundle.
     </p>
+  </Section>
 
-  </div>
-</section>
+  <!-- SEE A RECONSTRUCTION -->
+  <section id="artifact-demo" class="border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-6 py-12">
 
-<!-- ARTIFACT DEMO -->
-<section id="artifact-demo" class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-12">
+      <h2 class="text-lg font-sans tracking-tight text-off-white">
+        See a Reconstruction
+      </h2>
 
-    <h2 class="text-lg font-sans tracking-tight text-off-white opacity-90">
-      Run the Artifact Engine
-    </h2>
+      <p class="mt-4 text-sm text-off-white/80 max-w-3xl">
+        See how fragmented records are reconstructed into a single, verifiable history.
+      </p>
 
-    <p class="mt-4 text-sm text-off-white opacity-75 max-w-3xl">
-      Execute a sample operational dataset through the PV artifact pipeline.
-    </p>
+      <div class="mt-10 flex flex-col md:flex-row gap-16">
 
-    <!-- DEMO CONTROLS -->
-    <div class="mt-10 flex flex-col md:flex-row md:items-center gap-6">
+        <!-- LEFT: PRIMARY INTERACTION -->
+        <div class="flex flex-col gap-4">
+          <label class="text-sm text-off-white/80">Select a sample dataset</label>
 
-      <select id="dataset-select" class="bg-charcoal border border-white/10 text-off-white opacity-90 text-sm px-4 py-2">
-        <option>Industrial Sensor Network</option>
-        <option>Robotics Telemetry</option>
-        <option>Shipyard Commissioning</option>
-        <option>Audit Log Reconstruction</option>
-        <option>Machine Learning Pipeline</option>
-      </select>
+          <select id="dataset-select" class="bg-charcoal border border-white/10 text-off-white opacity-90 text-sm px-4 py-2">
+            <option>Industrial Sensor Network</option>
+            <option>Robotics Telemetry</option>
+            <option>Shipyard Commissioning</option>
+            <option>Audit Log Reconstruction</option>
+            <option>Machine Learning Pipeline</option>
+          </select>
 
-      <button id="run-artifact" class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 hover:text-[var(--accent)] transition-colors opacity-90">
-        Generate Artifact
-      </button>
+          <button id="run-artifact" class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 hover:text-[var(--accent)] transition-colors opacity-90">
+            Run Reconstruction
+          </button>
 
-    </div>
+          <p class="text-xs text-off-white/50">Takes a few seconds. No setup required.</p>
+        </div>
 
-    <!-- ARTIFACT OUTPUT PANEL -->
-    <div id="artifact-result" class="mt-10 border border-white/10 p-6 text-sm text-off-white/80 max-w-fit hidden">
-      <p class="text-off-white">Artifact Generated</p>
+        <!-- RIGHT: ESCALATION PATH -->
+        <div class="flex flex-col gap-3 justify-center">
+          <div class="text-sm text-off-white">Have your own data?</div>
+          <p class="text-sm text-off-white/70">Upload a dataset to generate a verification bundle.</p>
+          <a href="/example-reconstruction" class="nav-link text-sm text-off-white/70 hover:text-[var(--accent)] transition-colors">
+            → Use your own data
+          </a>
+        </div>
+
+      </div>
+
+      <!-- OUTPUT PANEL -->
+      <div id="artifact-result" class="mt-10 border border-white/10 p-6 text-sm text-off-white/80 max-w-fit hidden">
+        <p class="text-off-white">Artifact Generated</p>
 
         <div class="mt-6 text-off-white/60 space-y-4">
-
           <div>
             <div>Dataset</div>
             <div id="dataset-name" class="font-mono">Shipyard Commissioning</div>
           </div>
-
           <div>
             <div>Events Processed</div>
             <div id="events-processed" class="font-mono">142</div>
           </div>
-
           <div>
             <div class="font-semibold">Artifact Hash</div>
             <div id="artifact-hash" class="font-mono break-all">SHA-256: ...</div>
           </div>
-
           <div>
             <div>Artifact Bundle</div>
             <div class="font-mono">bundle.zip</div>
           </div>
-
         </div>
 
-      <div class="mt-6">
-        <a href="#" class="nav-link hover:text-[var(--accent)]">
-          Download Artifact Bundle →
-        </a>
+        <div class="mt-6">
+          <a href="#" class="nav-link hover:text-[var(--accent)]">
+            Download Artifact Bundle →
+          </a>
+        </div>
       </div>
 
     </div>
 
-  </div>
     <script>
       const datasetName = document.getElementById("dataset-name");
       const button = document.getElementById("run-artifact");
@@ -178,7 +155,6 @@ import Layout from "../layouts/Layout.astro";
       const dataset = document.getElementById("dataset-select");
       const hash = document.getElementById("artifact-hash");
       const events = document.getElementById("events-processed");
-      
 
       function randomHash() {
         const chars = "abcdef0123456789";
@@ -199,11 +175,9 @@ import Layout from "../layouts/Layout.astro";
 
       button.addEventListener("click", () => {
         const selected = dataset.value;
-
         datasetName.textContent = selected;
         hash.textContent = "SHA-256: " + randomHash();
         events.textContent = datasetEvents[selected] || 142;
-
         result.classList.remove("hidden");
       });
 
@@ -211,165 +185,106 @@ import Layout from "../layouts/Layout.astro";
         result.classList.add("hidden");
       });
     </script>
-</section>
-
-
-  <!-- WHAT THE SYSTEM DOES -->
-  <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
-      <h2 class="text-lg font-sans tracking-tight text-off-white  opacity-90">
-        What the system actually does
-      </h2>
-
-      <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white opacity-75">
-        <div>
-          <strong>Canonical ingest</strong><br/>
-          Normalizes source events into a consistent, versioned envelope.
-        </div>
-
-        <div>
-          <strong>Append-only event chain</strong><br/>
-          Each event is hashed, ordered, and fixed in sequence.
-        </div>
-
-        <div>
-          <strong>Deterministic bundle export</strong><br/>
-          Exports a reproducible snapshot of state and history.
-        </div>
-
-        <div>
-          <strong>Reproducible verification</strong><br/>
-          Any bundle can be independently validated against its chain.
-        </div>
-      </div>
-    </div>
   </section>
 
-<!-- PRODUCTION CAPABILITIES -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
-
-    <h2 class="text-lg font-sans tracking-tight text-off-white opacity-90">
-      What this becomes in production
-    </h2>
-
-    <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white opacity-75">
-
+  <!-- WHAT THE SYSTEM GUARANTEES -->
+  <Section title="What the system guarantees" bare>
+    <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white/80">
       <div>
-        <strong>Replayable timeline visualization</strong><br/>
+        <strong class="text-off-white">Consistent event history</strong><br/>
+        Events are normalized into a single, ordered record across systems.
+      </div>
+      <div>
+        <strong class="text-off-white">Immutable sequence</strong><br/>
+        Each event is fixed in place and cannot be altered without detection.
+      </div>
+      <div>
+        <strong class="text-off-white">Reproducible output</strong><br/>
+        The same input always produces the same verified result.
+      </div>
+      <div>
+        <strong class="text-off-white">Verifiable outside your systems</strong><br/>
+        Records can be checked and confirmed independently of the systems that produced them.
+      </div>
+    </div>
+  </Section>
+
+  <!-- PRODUCTION CAPABILITIES -->
+  <Section title="What this becomes in production" bare>
+    <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white/80">
+      <div>
+        <strong class="text-off-white">Replayable timeline visualization</strong><br/>
         Interactively reconstruct operational events with filtering, zoom, and cross-system traceability.
       </div>
-
       <div>
-        <strong>Continuous verification</strong><br/>
-        Automatically generate and validate artifacts from recurring operational data.
+        <strong class="text-off-white">Continuous verification</strong><br/>
+        Automatically generate and validate verification bundles from recurring operational data.
       </div>
-
       <div>
-        <strong>Audit-ready exports</strong><br/>
+        <strong class="text-off-white">Audit-ready exports</strong><br/>
         Produce structured, verifiable reports for internal review and external compliance.
       </div>
-
       <div>
-        <strong>Cross-system lineage</strong><br/>
+        <strong class="text-off-white">Cross-system lineage</strong><br/>
         Trace relationships between systems, teams, and events across time.
       </div>
-
     </div>
+  </Section>
 
-  </div>
-</section>
-
-  <!-- USE CASES -->
-  <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
-      <h2 class="text-lg font-sans tracking-tight text-off-white  opacity-90">
-        Real world applications
-      </h2>
-
-      <div class="mt-6 grid md:grid-cols-3 gap-8 text-sm text-off-white  opacity-75">
-        <div>
-          <strong>Logistics & Shipyards</strong><br/>
-          Clarifies custody, revision lineage, and commissioning records.
-        </div>
-
-        <div>
-          <strong>Robotics & Industrial Systems</strong><br/>
-          Preserves actuator state transitions and decision context.
-        </div>
-
-        <div>
-          <strong>Energy & Infrastructure</strong><br/>
-          Creates reproducible telemetry chains across vendors.
-        </div>
+  <!-- REAL WORLD APPLICATIONS -->
+  <Section title="Real world applications" bare>
+    <div class="mt-6 grid md:grid-cols-3 gap-8 text-sm text-off-white/80">
+      <div>
+        <strong class="text-off-white">Logistics & Shipyards</strong><br/>
+        Clarifies what happened, when it happened, and who did what across complex builds and handoffs.
+      </div>
+      <div>
+        <strong class="text-off-white">Robotics & Industrial Systems</strong><br/>
+        Reconstructs how systems behaved over time to understand failures and decisions.
+      </div>
+      <div>
+        <strong class="text-off-white">Energy & Infrastructure</strong><br/>
+        Creates a clear, consistent history across systems and vendors without relying on any single source.
       </div>
     </div>
-  </section>
+  </Section>
 
-  <!-- OPEN SOURCE KERNEL -->
-<section class="border-b border-white/10">
-  <div class="max-w-6xl mx-auto px-6 py-10">
+  <!-- OPEN SOURCE -->
+  <Section title="Open and Verifiable System">
+    <p>
+      The Prima Veritas reconstruction system and build pipeline are published as open source.
+      The full process for generating and verifying a verification bundle is transparent and inspectable.
+    </p>
+    <p>
+      Anyone can reproduce the same result and confirm its integrity using the same pipeline.
+    </p>
+    <a href="https://github.com/bryanziehl/prima-veritas-core"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="nav-link text-sm hover:text-[var(--accent)] transition-colors">
+      → Inspect the Kernel
+    </a>
+  </Section>
 
-    <h2 class="text-lg font-sans tracking-tight text-off-white opacity-90">
-      Open Source Kernel
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white opacity-75 space-y-4">
-
-      <p>
-        The Prima Veritas event kernel and deterministic build pipeline are published as open source.
-        The artifact generation and verification path is fully inspectable.
-      </p>
-
-      <p>
-        Anyone can reproduce artifact bundles and validate verification hashes using the same
-        deterministic pipeline.
-      </p>
-
-    </div>
-
-    <div class="mt-10">
-      <a href="/open-source"
-         class="nav-link text-sm opacity-75 transition-colors hover:text-[var(--accent)]">
-         Inspect the Kernel →
-      </a>
-    </div>
-
-  </div>
-</section>
-
-<!-- PILOT ENGAGEMENT -->
-<section>
-  <div class="max-w-6xl mx-auto px-6 py-12">
-
-    <h2 class="text-lg font-sans tracking-tight text-off-white opacity-90">
-      Pilot Engagement
-    </h2>
-
-    <div class="mt-6 max-w-4xl text-sm text-off-white opacity-75 space-y-4">
-
-      <p>
-        Prima Veritas is currently deployed through structured pilot engagements
-        with operational teams evaluating deterministic event reconstruction
-        within existing systems.
-      </p>
-
-      <p>
-        Technical reviews focus on dataset structure, artifact generation, and
-        integration into existing operational workflows.
-      </p>
-
-    </div>
-
-    <div class="mt-10 text-xl">
-      <a href="/contact"
-         class="nav-link transition-colors opacity-75 hover:text-[var(--accent)]">
-         Schedule Technical Review →
-      </a>
-    </div>
-
-  </div>
-</section>
+  <!-- PILOT ENGAGEMENT -->
+  <Section title="Pilot Engagement" last={true}>
+    <p>
+      Prima Veritas is currently working with teams to reconstruct and verify operational history
+      within their existing systems.
+    </p>
+    <p>
+      We start with a small, well-defined dataset and produce a clear, verifiable record of what
+      actually happened.
+    </p>
+    <p>
+      This allows teams to evaluate the system using their own data, without changing their
+      workflows or infrastructure.
+    </p>
+    <a href="/contact"
+      class="nav-link text-sm hover:text-[var(--accent)] transition-colors">
+      → Schedule a Technical Review
+    </a>
+  </Section>
 
 </main>
 
