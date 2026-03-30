@@ -325,34 +325,46 @@ e1034 → prev_hash: b221...`}
             const errorSection = document.getElementById("error-section");
             const errorList = document.getElementById("error-list");
 
+            const friendlyMessage = (reason) => {
+              switch (reason) {
+                case "no_file_uploaded":          return "Please upload a CSV file.";
+                case "missing_required_columns":  return "Your CSV is missing required columns.";
+                case "invalid_format":            return "Invalid format.";
+                case "column_count_mismatch":     return "CSV structure is incorrect.";
+                case "internal_server_error":     return "Unexpected error. Please try again.";
+                default:                          return reason || "Unexpected error. Please try again.";
+              }
+            };
+
             errorList.innerHTML = raw.errors.map(e => {
+              let label = "";
               let message = "";
-              let fix = "";
 
-              if (e.field === "timestamp" && e.reason === "missing_value") {
-                message = "Row " + e.row + " is missing a timestamp.";
-                fix = "Add one like 2024-01-01T10:00:00Z.";
-              } else if (e.field === "timestamp" && e.reason === "invalid_value") {
-                message = "Row " + e.row + " has an invalid timestamp.";
-                fix = "Use ISO format like 2024-01-01T10:00:00Z.";
-              } else if (e.reason === "missing_columns" || e.field === "header") {
-                message = "Your CSV is missing required columns.";
-                fix = "Make sure it includes: timestamp, stream_id, event_type, actor, object, notes.";
-              } else if (e.reason === "column_count_mismatch") {
-                message = "Row " + e.row + " does not match the expected structure.";
-                fix = "Each row must contain exactly 6 columns.";
+              if (e.row) {
+                label = "Row " + e.row + (e.field ? " — " + e.field + ":" : ":");
+                message = friendlyMessage(e.reason);
               } else {
-                message = e.hint || "An unexpected error occurred.";
-                fix = "";
+                label = "Header issue:";
+                message = friendlyMessage(e.reason);
               }
 
-              let fixHtml = "";
-              if (fix) {
-                fixHtml = '<div class="text-off-white/50">' + fix + '</div>';
+              let detailHtml = "";
+              if (e.details?.expected && e.details?.received) {
+                detailHtml = `
+                  <div class="mt-2 font-mono text-off-white/50 space-y-1">
+                    <div>Expected: ${e.details.expected}</div>
+                    <div>Received: ${e.details.received}</div>
+                  </div>`;
               }
 
-              return '<li class="space-y-1"><div class="text-off-white/80">' + message + '</div>' + fixHtml + '</li>';
+              return `<li class="space-y-1">
+                <div class="text-off-white/80"><span class="text-off-white/50">${label}</span> ${message}</div>
+                ${detailHtml}
+              </li>`;
             }).join("");
+
+            // Optional tip line
+            errorList.innerHTML += `<li class="mt-4 text-off-white/40">Tip: CSV must match exact column names.</li>`;
 
             errorSection.classList.remove("hidden");
           } else {
