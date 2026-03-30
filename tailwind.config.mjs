@@ -11,7 +11,7 @@ export default {
         serif: ['Merriweather', 'serif'],
         },
         colors: {offwhite: '#DFD0B8',
-
+          'off-white': '#DFD0B8',
         },        
     },
   },

@@ -3,11 +3,11 @@ const { title, last = false, bare = false } = Astro.props;
 ---
 <section class:list={["border-white/10", { "border-b": !last }]}>
   <div class="max-w-6xl mx-auto px-6 py-10">
-    <h2 class="text-lg font-sans tracking-tight text-off-white">{title}</h2>
+    <h2 class="text-lg font-sans tracking-tight text-off-white/90">{title}</h2>
     {bare ? (
       <slot />
     ) : (
-      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
+      <div class="mt-6 max-w-4xl text-sm text-off-white/70 space-y-4">
         <slot />
       </div>
     )}
