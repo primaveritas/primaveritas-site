@@ -185,7 +185,8 @@ e1034 → prev_hash: b221...`}
             </div>
 
             <div class="mt-6">
-              <a href="https://api.primaveritas.io/download/bundle.zip"
+              <a id="download-link"
+                href="#"
                 class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 inline-block hover:text-[var(--accent)] transition-colors">
                 Download Artifact
               </a>
@@ -385,6 +386,7 @@ e1034 → prev_hash: b221...`}
         }
 
         document.getElementById("event-count").textContent = raw.event_count;
+        document.getElementById("download-link").href = "https://api.primaveritas.io" + raw.download_url;
         document.getElementById("result").classList.remove("hidden");
 
         const previewSection = document.getElementById("preview-section");
