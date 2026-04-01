@@ -185,11 +185,10 @@ e1034 → prev_hash: b221...`}
             </div>
 
             <div class="mt-6">
-              <a id="download-link"
-                href="#"
-                class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 inline-block hover:text-[var(--accent)] transition-colors">
-                Download Artifact
-              </a>
+            <button id="download-link"
+              class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 inline-block hover:text-[var(--accent)] transition-colors">
+              Download Artifact
+            </button>
             </div>
           </div>
         </div>
@@ -269,151 +268,215 @@ e1034 → prev_hash: b221...`}
 
     </div>
   </section>
+  <div id="download-modal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
+    <div class="bg-charcoal border border-white/10 p-8 max-w-md w-full mx-4">
+      <h2 class="text-off-white font-semibold text-base mb-2">Download Artifact</h2>
+      <p class="text-off-white/60 text-sm mb-6">
+        Enter your email to download your artifact.<br/>
+        We do not retain your uploaded data.
+      </p>
+      <div class="space-y-4">
+        <div>
+          <label class="text-off-white/60 text-xs block mb-1">Email <span class="text-red-400">*</span></label>
+          <input id="modal-email" type="email" placeholder="you@example.com"
+            class="w-full bg-carbon-navy border border-white/10 text-off-white text-sm px-3 py-2 focus:outline-none focus:border-white/30" />
+          <p id="modal-email-error" class="text-red-400 text-xs mt-1 hidden">Email is required.</p>
+        </div>
+        <div>
+          <label class="text-off-white/60 text-xs block mb-1">Company <span class="text-off-white/30">(optional)</span></label>
+          <input id="modal-company" type="text" placeholder="Acme Corp"
+            class="w-full bg-carbon-navy border border-white/10 text-off-white text-sm px-3 py-2 focus:outline-none focus:border-white/30" />
+        </div>
+      </div>
+      <div class="mt-6 flex gap-3">
+        <button id="modal-submit"
+          class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 hover:text-[var(--accent)] transition-colors">
+          Download Artifact
+        </button>
+        <button id="modal-cancel"
+          class="text-sm text-off-white/40 hover:text-off-white/70 transition-colors px-2">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
 
   <script>
-    const fileInput = document.querySelector('input[type="file"]');
-    const button = document.getElementById("generate-btn");
-    const statusEl = document.getElementById("status-message");
+const fileInput = document.querySelector('input[type="file"]');
+const button = document.getElementById("generate-btn");
+const statusEl = document.getElementById("status-message");
 
-    let fileSelected = false;
-    let artifactGenerated = false;
+let fileSelected = false;
+let artifactGenerated = false;
+let pendingDownloadUrl = null;
+let userEmail = "";
+let userCompany = "";
 
-    fileInput.addEventListener("change", () => {
-      fileSelected = true;
-      artifactGenerated = false;
+fileInput.addEventListener("change", () => {
+  fileSelected = true;
+  artifactGenerated = false;
 
-      const file = fileInput.files[0];
+  const file = fileInput.files[0];
+  statusEl.textContent = file ? file.name : "";
+  statusEl.classList.remove("opacity-0", "text-red-400");
+  statusEl.classList.add("text-off-white/60");
 
-      statusEl.textContent = file ? file.name : "";
-      statusEl.classList.remove("opacity-0", "text-red-400");
-      statusEl.classList.add("text-off-white/60");
+  button.disabled = false;
+  document.getElementById("btn-text").textContent = "Generate Artifact";
+  document.getElementById("btn-spinner").classList.add("hidden");
+  document.getElementById("error-section").classList.add("hidden");
+  document.getElementById("error-list").innerHTML = "";
+});
 
-      button.disabled = false;
-      document.getElementById("btn-text").textContent = "Generate Artifact";
-      document.getElementById("btn-spinner").classList.add("hidden");
+button.addEventListener("click", async () => {
+  const file = fileInput.files[0];
 
-      document.getElementById("error-section").classList.add("hidden");
-      document.getElementById("error-list").innerHTML = "";
+  if (!fileSelected || !file || artifactGenerated) {
+    statusEl.textContent = "No file selected.";
+    statusEl.classList.remove("opacity-0", "text-off-white/60");
+    statusEl.classList.add("text-red-400");
+    return;
+  }
+
+  button.disabled = true;
+  document.getElementById("btn-spinner").classList.remove("hidden");
+
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("https://api.primaveritas.io/artifact", {
+      method: "POST",
+      body: formData
     });
 
-    button.addEventListener("click", async () => {
+    const raw = await res.json();
 
-      const file = fileInput.files[0];
+    if (!res.ok || raw.status === "error") {
+      if (Array.isArray(raw.errors)) {
+        const errorSection = document.getElementById("error-section");
+        const errorList = document.getElementById("error-list");
 
-      if (!fileSelected || !file || artifactGenerated) {
-        statusEl.textContent = "No file selected.";
-        statusEl.classList.remove("opacity-0", "text-off-white/60");
-        statusEl.classList.add("text-red-400");
-        return;
-      }
-
-      button.disabled = true;
-      document.getElementById("btn-spinner").classList.remove("hidden");
-
-      try {
-        const formData = new FormData();
-        formData.append("file", file);
-
-        const res = await fetch("https://api.primaveritas.io/artifact", {
-          method: "POST",
-          body: formData
-        });
-
-        const raw = await res.json();
-
-        if (!res.ok || raw.status === "error") {
-          if (Array.isArray(raw.errors)) {
-            const errorSection = document.getElementById("error-section");
-            const errorList = document.getElementById("error-list");
-
-            const friendlyMessage = (reason) => {
-              switch (reason) {
-                case "no_file_uploaded":          return "Please upload a CSV file.";
-                case "missing_required_columns":  return "Your CSV is missing required columns.";
-                case "invalid_format":            return "Invalid format.";
-                case "column_count_mismatch":     return "CSV structure is incorrect.";
-                case "internal_server_error":     return "Unexpected error. Please try again.";
-                default:                          return reason || "Unexpected error. Please try again.";
-              }
-            };
-
-            errorList.innerHTML = raw.errors.map(e => {
-              let label = "";
-              let message = "";
-
-              if (e.row) {
-                label = "Row " + e.row + (e.field ? " — " + e.field + ":" : ":");
-                message = friendlyMessage(e.reason);
-              } else {
-                label = "Header issue:";
-                message = friendlyMessage(e.reason);
-              }
-
-              let detailHtml = "";
-              if (e.details?.expected && e.details?.received) {
-                detailHtml = `
-                  <div class="mt-2 font-mono text-off-white/50 space-y-1">
-                    <div>Expected: ${e.details.expected}</div>
-                    <div>Received: ${e.details.received}</div>
-                  </div>`;
-              }
-
-              return `<li class="space-y-1">
-                <div class="text-off-white/80"><span class="text-off-white/50">${label}</span> ${message}</div>
-                ${detailHtml}
-              </li>`;
-            }).join("");
-
-            // Optional tip line
-            errorList.innerHTML += `<li class="mt-4 text-off-white/40">Tip: CSV must match exact column names.</li>`;
-
-            errorSection.classList.remove("hidden");
-          } else {
-            statusEl.textContent = "Unknown error";
-            statusEl.classList.remove("opacity-0", "text-off-white/60");
-            statusEl.classList.add("text-red-400");
+        const friendlyMessage = (reason) => {
+          switch (reason) {
+            case "no_file_uploaded":         return "Please upload a CSV file.";
+            case "missing_required_columns": return "Your CSV is missing required columns.";
+            case "invalid_format":           return "Invalid format.";
+            case "column_count_mismatch":    return "CSV structure is incorrect.";
+            case "internal_server_error":    return "Unexpected error. Please try again.";
+            default:                         return reason || "Unexpected error. Please try again.";
           }
-          return;
-        }
+        };
 
-        const hashEl = document.getElementById("artifact-hash");
+        errorList.innerHTML = raw.errors.map(e => {
+          let label = e.row
+            ? "Row " + e.row + (e.field ? " — " + e.field + ":" : ":")
+            : "Header issue:";
+          let message = friendlyMessage(e.reason);
+          let detailHtml = "";
+          if (e.details?.expected && e.details?.received) {
+            detailHtml = `
+              <div class="mt-2 font-mono text-off-white/50 space-y-1">
+                <div>Expected: ${e.details.expected}</div>
+                <div>Received: ${e.details.received}</div>
+              </div>`;
+          }
+          return `<li class="space-y-1">
+            <div class="text-off-white/80"><span class="text-off-white/50">${label}</span> ${message}</div>
+            ${detailHtml}
+          </li>`;
+        }).join("");
 
-        if (typeof raw.artifact_hash === "string" && raw.artifact_hash.length > 0) {
-          hashEl.textContent = raw.artifact_hash;
-        } else {
-          hashEl.textContent = "Hash unavailable";
-          hashEl.classList.add("text-off-white/50");
-        }
-
-        document.getElementById("event-count").textContent = raw.event_count;
-        document.getElementById("download-link").href = "https://api.primaveritas.io" + raw.download_url;
-        document.getElementById("result").classList.remove("hidden");
-
-        const previewSection = document.getElementById("preview-section");
-        const previewContent = document.getElementById("preview-content");
-
-        if (Array.isArray(raw.preview) && raw.preview.length > 0) {
-          previewContent.textContent = raw.preview.slice(0, 10).join("\n");
-          previewSection.classList.remove("hidden");
-        } else {
-          previewContent.textContent = "Preview not available.";
-          previewSection.classList.remove("hidden");
-        }
-
-        artifactGenerated = true;
-
-      } catch (err) {
-        statusEl.textContent = "Network or server error";
+        errorList.innerHTML += `<li class="mt-4 text-off-white/40">Tip: CSV must match exact column names.</li>`;
+        errorSection.classList.remove("hidden");
+      } else {
+        statusEl.textContent = "Unknown error";
         statusEl.classList.remove("opacity-0", "text-off-white/60");
         statusEl.classList.add("text-red-400");
-      } finally {
-        await new Promise(r => setTimeout(r, 400));
-        button.disabled = false;
-        document.getElementById("btn-text").textContent = "Generate Artifact";
-        document.getElementById("btn-spinner").classList.add("hidden");
       }
+      return;
+    }
 
-    });
+    const hashEl = document.getElementById("artifact-hash");
+    if (typeof raw.artifact_hash === "string" && raw.artifact_hash.length > 0) {
+      hashEl.textContent = raw.artifact_hash;
+    } else {
+      hashEl.textContent = "Hash unavailable";
+      hashEl.classList.add("text-off-white/50");
+    }
+
+    document.getElementById("event-count").textContent = raw.event_count;
+
+    pendingDownloadUrl = raw.download_url
+      ? "https://api.primaveritas.io" + raw.download_url
+      : "https://api.primaveritas.io/download/bundle.zip";
+
+    const previewSection = document.getElementById("preview-section");
+    const previewContent = document.getElementById("preview-content");
+    if (Array.isArray(raw.preview) && raw.preview.length > 0) {
+      previewContent.textContent = raw.preview.slice(0, 10).join("\n");
+      previewSection.classList.remove("hidden");
+    } else {
+      previewContent.textContent = "Preview not available.";
+      previewSection.classList.remove("hidden");
+    }
+
+    document.getElementById("result").classList.remove("hidden");
+    artifactGenerated = true;
+
+  } catch (err) {
+    statusEl.textContent = "Network or server error";
+    statusEl.classList.remove("opacity-0", "text-off-white/60");
+    statusEl.classList.add("text-red-400");
+  } finally {
+    await new Promise(r => setTimeout(r, 400));
+    button.disabled = false;
+    document.getElementById("btn-text").textContent = "Generate Artifact";
+    document.getElementById("btn-spinner").classList.add("hidden");
+  }
+});
+
+// Download button opens modal
+document.getElementById("download-link").addEventListener("click", (e) => {
+  e.preventDefault();
+  document.getElementById("modal-email").value = userEmail;
+  document.getElementById("modal-company").value = userCompany;
+  document.getElementById("modal-email-error").classList.add("hidden");
+  document.getElementById("download-modal").classList.remove("hidden");
+});
+
+// Cancel closes modal
+document.getElementById("modal-cancel").addEventListener("click", () => {
+  document.getElementById("download-modal").classList.add("hidden");
+});
+
+// Click outside modal to close
+document.getElementById("download-modal").addEventListener("click", (e) => {
+  if (e.target === document.getElementById("download-modal")) {
+    document.getElementById("download-modal").classList.add("hidden");
+  }
+});
+
+// Submit modal
+document.getElementById("modal-submit").addEventListener("click", () => {
+  const emailInput = document.getElementById("modal-email");
+  const emailError = document.getElementById("modal-email-error");
+
+  if (!emailInput.value.trim()) {
+    emailError.classList.remove("hidden");
+    return;
+  }
+
+  userEmail = emailInput.value.trim();
+  userCompany = document.getElementById("modal-company").value.trim();
+
+  document.getElementById("download-modal").classList.add("hidden");
+
+  if (pendingDownloadUrl) {
+    window.location.href = pendingDownloadUrl;
+  }
+});
   </script>
 
 </main>
