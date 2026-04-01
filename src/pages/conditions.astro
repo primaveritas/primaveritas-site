@@ -1,0 +1,104 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import Section from "../components/Section.astro";
+---
+
+<Layout title="Terms and Conditions | Prima Veritas">
+
+<main class="flex-1">
+
+  <PageHero
+    title="Terms and Conditions"
+    subtitle="This service is provided for demonstration and evaluation purposes."
+  />
+
+  <Section title="Use of service">
+    <p class="text-off-white/60 italic">
+      By using the service, you agree to the following.
+    </p>
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ Use the service lawfully</li>
+      <li>→ Upload properly formatted data</li>
+      <li>→ Not misuse or disrupt the system</li>
+    </ul>
+  </Section>
+
+  <Section title="Your responsibility">
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ The accuracy of submitted data</li>
+      <li>→ Having the right to use and upload that data</li>
+    </ul>
+  </Section>
+
+  <Section title="Nature of the system">
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ The system generates artifacts deterministically</li>
+      <li>→ Output is based solely on submitted data</li>
+      <li>→ The system does not independently verify real-world truth</li>
+    </ul>
+  </Section>
+
+  <Section title="No warranty">
+    <p>
+      The service is provided "as is" without guarantees of:
+    </p>
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ Availability</li>
+      <li>→ Accuracy</li>
+      <li>→ Fitness for a specific purpose</li>
+    </ul>
+  </Section>
+
+  <Section title="Limitation of liability">
+    <p>
+      Prima Veritas is not liable for:
+    </p>
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ Errors in output</li>
+      <li>→ Service interruptions</li>
+      <li>→ Loss of data or business impact</li>
+    </ul>
+  </Section>
+
+  <Section title="Data handling">
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ Uploaded files are deleted after processing</li>
+      <li>→ Artifacts are stored temporarily for download</li>
+      <li>→ No operational data is retained</li>
+    </ul>
+  </Section>
+
+  <Section title="Intellectual property">
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ The system and platform belong to Prima Veritas</li>
+      <li>→ You retain ownership of your submitted data</li>
+    </ul>
+  </Section>
+
+  <Section title="Access">
+    <p>
+      We may restrict access in cases of misuse or abuse of the system.
+    </p>
+  </Section>
+
+  <Section title="Governing law">
+    <p>
+      California, United States.
+    </p>
+  </Section>
+
+  <Section title="Contact" last={true}>
+    <p>
+      Questions about these terms?
+    </p>
+    <a href="mailto:[Insert Contact Email]"
+      class="nav-link text-sm hover:text-[var(--accent)] transition-colors">
+      → [Insert Contact Email]
+    </a>
+    <p class="text-off-white/40 text-xs mt-4">Effective Date: 03/31/2026</p>
+  </Section>
+
+</main>
+
+</Layout>

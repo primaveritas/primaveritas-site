@@ -1,0 +1,102 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import Section from "../components/Section.astro";
+---
+
+<Layout title="Privacy Policy | Prima Veritas">
+
+<main class="flex-1">
+
+  <PageHero
+    title="Privacy Policy"
+    subtitle="We collect minimal information. We do not retain your data."
+  />
+
+  <Section title="Information you provide">
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ Email address — required for artifact download</li>
+      <li>→ Company name — optional</li>
+    </ul>
+  </Section>
+
+  <Section title="Uploaded data">
+    <p class="text-off-white/60 italic">
+      Files are processed and discarded. Nothing is stored.
+    </p>
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ Files are processed transiently for validation and artifact generation</li>
+      <li>→ Files are deleted after processing</li>
+      <li>→ We do not store or retain uploaded operational data</li>
+    </ul>
+  </Section>
+
+  <Section title="Generated artifacts">
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ Artifacts are created based on your submitted data</li>
+      <li>→ Artifacts are stored temporarily to enable download</li>
+      <li>→ Artifacts are not retained long-term</li>
+    </ul>
+  </Section>
+
+  <Section title="Technical information">
+    <p>
+      We may collect limited system-level data to maintain reliability.
+    </p>
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ IP address</li>
+      <li>→ Request timestamps</li>
+      <li>→ File size and row count</li>
+      <li>→ Artifact hash</li>
+      <li>→ Basic usage data</li>
+    </ul>
+  </Section>
+
+  <Section title="How we use information">
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ Deliver artifact downloads</li>
+      <li>→ Maintain system reliability</li>
+      <li>→ Understand legitimate usage patterns</li>
+      <li>→ Respond to inquiries</li>
+    </ul>
+  </Section>
+
+  <Section title="What we do not do">
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ We do not sell your data</li>
+      <li>→ We do not use advertising trackers</li>
+      <li>→ We do not retain your uploaded files</li>
+    </ul>
+  </Section>
+
+  <Section title="Data retention">
+    <ul class="space-y-2 text-off-white/70 list-none">
+      <li>→ Uploaded files — not retained</li>
+      <li>→ Artifacts — temporary only</li>
+      <li>→ Email and company name — retained for communication</li>
+    </ul>
+  </Section>
+
+  <Section title="Security">
+    <p>
+      We implement reasonable safeguards to protect the information we handle.
+    </p>
+    <p>
+      No system is completely secure.
+    </p>
+  </Section>
+
+  <Section title="Contact" last={true}>
+    <p>
+      Questions about this policy?
+    </p>
+    <a href="mailto:[Insert Contact Email]"
+      class="nav-link text-sm hover:text-[var(--accent)] transition-colors">
+      → [Insert Contact Email]
+    </a>
+    <p class="text-off-white/40 text-xs mt-4">Effective Date: [Insert Date]</p>
+  </Section>
+
+</main>
+
+</Layout>
