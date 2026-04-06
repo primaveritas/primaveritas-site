@@ -278,7 +278,6 @@
             <th>Company</th>
             <th>Artifact Hash</th>
             <th>Events</th>
-            <th>Timestamp</th>
             <th>Recorded</th>
         </tr>
       </thead>
@@ -350,7 +349,6 @@
         <td>${esc(r.company)}</td>
         <td class="hash" title="${esc(r.artifact_hash)}">${esc(r.artifact_hash)}</td>
         <td>${r.event_count}</td>
-        <td>${esc(r.timestamp)}</td>
         <td>${esc(r.recorded_at)}</td>
       </tr>
     `).join("");

@@ -484,6 +484,7 @@ document.getElementById("modal-submit").addEventListener("click", () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: userEmail,
+        company: userCompany,
         artifact_hash: artifactHash,
         event_count: eventCount,
         timestamp: new Date().toISOString()
