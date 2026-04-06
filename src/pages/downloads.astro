@@ -1,0 +1,368 @@
+---
+// src/pages/admin/downloads.astro
+// Drop this into your Astro project.
+// Set ADMIN_KEY and API_BASE in your .env:
+//   PUBLIC_ADMIN_KEY=your-secret
+//   PUBLIC_API_BASE=https://your-ec2-domain.com
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PV Admin — Downloads</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0a0a0a;
+      --surface:    #111111;
+      --border:     #222222;
+      --accent:     #c8f04a;
+      --text:       #e8e8e8;
+      --muted:      #555555;
+      --danger:     #ff4444;
+      --mono:       'IBM Plex Mono', monospace;
+      --sans:       'IBM Plex Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.25rem;
+    }
+
+    header h1 {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    header span {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    #auth-gate {
+      max-width: 360px;
+      margin: 6rem auto;
+    }
+
+    #auth-gate label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    #auth-gate input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      padding: 0.65rem 0.85rem;
+      outline: none;
+      margin-bottom: 0.75rem;
+      transition: border-color 0.15s;
+    }
+
+    #auth-gate input:focus { border-color: var(--accent); }
+
+    #auth-gate button {
+      width: 100%;
+      background: var(--accent);
+      color: #0a0a0a;
+      border: none;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.7rem;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    #auth-gate button:hover { opacity: 0.85; }
+
+    #error-msg {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--danger);
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    #dashboard { display: none; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+    }
+
+    thead tr {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    tbody tr:hover td { background: var(--surface); }
+
+    td.hash {
+      color: var(--muted);
+      font-size: 0.7rem;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 3rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .toolbar-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .btn-refresh {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .btn-refresh:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>PV / Downloads</h1>
+  <span>admin console</span>
+</header>
+
+<!-- Auth gate -->
+<div id="auth-gate">
+  <label for="key-input">Admin Key</label>
+  <input id="key-input" type="password" placeholder="enter key" />
+  <button onclick="login()">Access</button>
+  <div id="error-msg">Invalid key or server unreachable.</div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard">
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Total Downloads</div>
+      <div class="stat-value" id="stat-total">—</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Unique Emails</div>
+      <div class="stat-value" id="stat-emails">—</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Unique Artifacts</div>
+      <div class="stat-value" id="stat-artifacts">—</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <span class="toolbar-label">Download Log</span>
+    <button class="btn-refresh" onclick="loadData()">↺ Refresh</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th>Artifact Hash</th>
+          <th>Events</th>
+          <th>Timestamp</th>
+          <th>Recorded</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <tr><td colspan="6" class="empty">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const API_BASE  = import.meta.env.PUBLIC_API_BASE  ?? "";
+  const ADMIN_KEY = import.meta.env.PUBLIC_ADMIN_KEY ?? "";
+
+  let activeKey = "";
+
+  async function login() {
+    const input = document.getElementById("key-input").value.trim();
+    if (!input) return;
+    activeKey = input;
+    await loadData();
+  }
+
+  async function loadData() {
+    const errEl = document.getElementById("error-msg");
+    errEl.style.display = "none";
+
+    try {
+      const res = await fetch(`${API_BASE}/admin/downloads`, {
+        headers: { Authorization: `Bearer ${activeKey}` }
+      });
+
+      if (res.status === 401) {
+        errEl.style.display = "block";
+        return;
+      }
+
+      const rows = await res.json();
+
+      document.getElementById("auth-gate").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+
+      renderStats(rows);
+      renderTable(rows);
+
+    } catch (e) {
+      errEl.style.display = "block";
+    }
+  }
+
+  function renderStats(rows) {
+    document.getElementById("stat-total").textContent     = rows.length;
+    document.getElementById("stat-emails").textContent    = new Set(rows.map(r => r.email)).size;
+    document.getElementById("stat-artifacts").textContent = new Set(rows.map(r => r.artifact_hash)).size;
+  }
+
+  function renderTable(rows) {
+    const tbody = document.getElementById("table-body");
+
+    if (!rows.length) {
+      tbody.innerHTML = `<tr><td colspan="6" class="empty">No downloads recorded yet.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = rows.map((r, i) => `
+      <tr>
+        <td>${r.id}</td>
+        <td>${esc(r.email)}</td>
+        <td class="hash" title="${esc(r.artifact_hash)}">${esc(r.artifact_hash)}</td>
+        <td>${r.event_count}</td>
+        <td>${esc(r.timestamp)}</td>
+        <td>${esc(r.recorded_at)}</td>
+      </tr>
+    `).join("");
+  }
+
+  function esc(str) {
+    return String(str ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  // Allow Enter key on password field
+  document.getElementById("key-input")
+    .addEventListener("keydown", e => { if (e.key === "Enter") login(); });
+</script>
+
+</body>
+</html>
