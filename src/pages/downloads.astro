@@ -241,7 +241,7 @@
 <div id="auth-gate">
   <label for="key-input">Admin Key</label>
   <input id="key-input" type="password" placeholder="enter key" />
-  <button onclick="login()">Access</button>
+  <button id="login-btn">Access</button>
   <div id="error-msg">Invalid key or server unreachable.</div>
 </div>
 
@@ -264,19 +264,22 @@
 
   <div class="toolbar">
     <span class="toolbar-label">Download Log</span>
-    <button class="btn-refresh" onclick="loadData()">↺ Refresh</button>
+    <button class="btn-refresh" id="refresh-btn">↺ Refresh</button>
+    <button class="btn-refresh" id="delete-btn" style="color:#ff4444;border-color:#ff4444;display:none">✕ Delete Selected</button>
   </div>
 
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Email</th>
-          <th>Artifact Hash</th>
-          <th>Events</th>
-          <th>Timestamp</th>
-          <th>Recorded</th>
+            <th><input type="checkbox" id="select-all"></th>
+            <th>#</th>
+            <th>Email</th>
+            <th>Company</th>
+            <th>Artifact Hash</th>
+            <th>Events</th>
+            <th>Timestamp</th>
+            <th>Recorded</th>
         </tr>
       </thead>
       <tbody id="table-body">
@@ -287,8 +290,7 @@
 </div>
 
 <script>
-  const API_BASE  = import.meta.env.PUBLIC_API_BASE  ?? "";
-  const ADMIN_KEY = import.meta.env.PUBLIC_ADMIN_KEY ?? "";
+  const API_BASE = "https://data.primaveritas.io";
 
   let activeKey = "";
 
@@ -342,8 +344,10 @@
 
     tbody.innerHTML = rows.map((r, i) => `
       <tr>
+        <td><input type="checkbox" class="row-check" data-id="${r.id}"></td>
         <td>${r.id}</td>
         <td>${esc(r.email)}</td>
+        <td>${esc(r.company)}</td>
         <td class="hash" title="${esc(r.artifact_hash)}">${esc(r.artifact_hash)}</td>
         <td>${r.event_count}</td>
         <td>${esc(r.timestamp)}</td>
@@ -360,8 +364,39 @@
   }
 
   // Allow Enter key on password field
-  document.getElementById("key-input")
-    .addEventListener("keydown", e => { if (e.key === "Enter") login(); });
+    document.getElementById("key-input")
+        .addEventListener("keydown", e => { if (e.key === "Enter") login(); });
+    document.getElementById("login-btn")
+        .addEventListener("click", login);
+    document.getElementById("refresh-btn")
+        .addEventListener("click", loadData);
+
+    document.getElementById("delete-btn")
+    .addEventListener("click", async () => {
+        const checked = [...document.querySelectorAll(".row-check:checked")];
+        const ids = checked.map(el => parseInt(el.dataset.id));
+        if (!ids.length) return;
+
+        await fetch(`${API_BASE}/admin/downloads`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${activeKey}`
+        },
+        body: JSON.stringify({ ids })
+        });
+
+        await loadData();
+    });
+
+    document.addEventListener("change", (e) => {
+    if (e.target.id === "select-all") {
+        document.querySelectorAll(".row-check")
+        .forEach(cb => cb.checked = e.target.checked);
+    }
+    const anyChecked = [...document.querySelectorAll(".row-check:checked")].length > 0;
+    document.getElementById("delete-btn").style.display = anyChecked ? "block" : "none";
+    });
 </script>
 
 </body>

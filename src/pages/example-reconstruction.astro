@@ -474,7 +474,25 @@ document.getElementById("modal-submit").addEventListener("click", () => {
   document.getElementById("download-modal").classList.add("hidden");
 
   if (pendingDownloadUrl) {
-    window.location.href = pendingDownloadUrl;
+    const artifactHash = document.getElementById("artifact-hash").textContent;
+    const eventCount = parseInt(document.getElementById("event-count").textContent);
+
+    const url = pendingDownloadUrl;
+
+    fetch("https://data.primaveritas.io/log-download", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: userEmail,
+        artifact_hash: artifactHash,
+        event_count: eventCount,
+        timestamp: new Date().toISOString()
+      })
+    })
+    .catch(() => {})
+    .finally(() => {
+      window.location.href = url;
+    });
   }
 });
   </script>
