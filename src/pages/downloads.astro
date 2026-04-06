@@ -240,7 +240,8 @@
 <!-- Auth gate -->
 <div id="auth-gate">
   <label for="key-input">Admin Key</label>
-  <input id="key-input" type="password" placeholder="enter key" />
+  <input type="text" name="username" value="admin" style="display:none" autocomplete="username">
+  <input id="key-input" type="password" name="password" autocomplete="current-password" placeholder="enter key" />
   <button id="login-btn">Access</button>
   <div id="error-msg">Invalid key or server unreachable.</div>
 </div>
