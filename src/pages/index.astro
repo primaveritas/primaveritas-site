@@ -72,7 +72,7 @@ import Section from "../components/Section.astro";
     </p>
   </Section>
 
-  <!-- SEE A RECONSTRUCTION -->
+<!-- SEE A RECONSTRUCTION -->
   <section id="artifact-demo" class="border-b border-white/10">
     <div class="max-w-6xl mx-auto px-6 py-12">
 
@@ -128,22 +128,18 @@ import Section from "../components/Section.astro";
           </div>
           <div>
             <div>Events Processed</div>
-            <div id="events-processed" class="font-mono">142</div>
+            <div id="events-processed" class="font-mono">147</div>
           </div>
           <div>
             <div class="font-semibold">Artifact Hash</div>
             <div id="artifact-hash" class="font-mono break-all">SHA-256: ...</div>
           </div>
-          <div>
-            <div>Artifact Bundle</div>
-            <div class="font-mono">bundle.zip</div>
+          <div class="pt-2">
+            <a id="bundle-download" href="#" download="bundle.zip"
+              class="nav-link text-sm text-off-white/70 hover:text-[var(--accent)] transition-colors">
+              → Download Artifact Bundle
+            </a>
           </div>
-        </div>
-
-        <div class="mt-6">
-          <a href="#" class="nav-link hover:text-[var(--accent)]">
-            Download Artifact Bundle →
-          </a>
         </div>
       </div>
 
@@ -156,29 +152,38 @@ import Section from "../components/Section.astro";
       const dataset = document.getElementById("dataset-select");
       const hash = document.getElementById("artifact-hash");
       const events = document.getElementById("events-processed");
+      const downloadLink = document.getElementById("bundle-download");
 
-      function randomHash() {
-        const chars = "abcdef0123456789";
-        let out = "";
-        for (let i = 0; i < 64; i++) {
-          out += chars[Math.floor(Math.random() * chars.length)];
+      const datasetMap = {
+        "Industrial Sensor Network": {
+          hash: "a3f8c2d914e7b056f2819c3d4a0e6f1b8c7d2e9f0a1b3c4d5e6f7a8b9c0d1e2",
+          bundle: "/reconstruction_bundles/industrial_sensors/bundle.zip"
+        },
+        "Robotics Telemetry": {
+          hash: "b84da7c2e1f5a9b3d0c6e8f4a2b7d1e3c9f0a5b8d2e6c4a1b3d7f9e0c2a8b5d4",
+          bundle: "/reconstruction_bundles/robotics/bundle.zip"
+        },
+        "Shipyard Commissioning": {
+          hash: "91bd4e7f2a3c1d0e5f8b9c4a7d2e6f1a3b0c5d8e9f2a4b7c1d3e5f0a8b2c6d9",
+          bundle: "/reconstruction_bundles/shipyard/bundle.zip"
+        },
+        "Audit Log Reconstruction": {
+          hash: "ec96c34273df016723223f03b6db94ba0570b6be91e7ee04dbbf7f0a99676e1a",
+          bundle: "/reconstruction_bundles/audit_logs/bundle.zip"
+        },
+        "Machine Learning Pipeline": {
+          hash: "5c3e2984a1f7b0d6e2c9a4b8f3d1e7c0a5b2d8f9e1c3a6b4d0e7f2c8a9b1d5e4",
+          bundle: "/reconstruction_bundles/ml_pipeline/bundle.zip"
         }
-        return out;
-      }
-
-      const datasetEvents = {
-        "Industrial Sensor Network": 214,
-        "Robotics Telemetry": 173,
-        "Shipyard Commissioning": 142,
-        "Audit Log Reconstruction": 388,
-        "Machine Learning Pipeline": 96
       };
 
       button.addEventListener("click", () => {
         const selected = dataset.value;
+        const data = datasetMap[selected];
         datasetName.textContent = selected;
-        hash.textContent = "SHA-256: " + randomHash();
-        events.textContent = datasetEvents[selected] || 142;
+        hash.textContent = "SHA-256: " + data.hash;
+        events.textContent = 147;
+        downloadLink.href = data.bundle;
         result.classList.remove("hidden");
       });
 
