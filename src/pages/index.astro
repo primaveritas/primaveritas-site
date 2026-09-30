@@ -11,7 +11,7 @@ import Section from "../components/Section.astro";
   <!-- HERO -->
   <PageHero
     title="Reconstruct Operational History Across Systems"
-    subtitle="Prima Veritas converts fragmented operational logs into a reproducible, verifiable history of events."
+    subtitle="Prima Veritas converts fragmented operational logs into a single, hash-chained history of events."
   />
 
   <!-- WHY IT MATTERS -->
@@ -21,19 +21,15 @@ import Section from "../components/Section.astro";
       resolving conflicting records, and defending decisions across systems.
     </p>
     <p>
-      Prima Veritas produces a verifiable record that reduces rework, simplifies audits,
-      and removes ambiguity between teams.
-    </p>
-    <p>
-      Because the record is consistent and reproducible, it supports reliable analysis,
-      automation, and any system that depends on accurate historical data.
+      Prima Veritas is designed to produce a single, hash-chained record of what the source
+      data says happened, so teams work from one account instead of several.
     </p>
   </Section>
 
   <!-- DIAGRAM -->
-  <Section title="From scattered logs to a verifiable history" bare>
+  <Section title="From scattered logs to a hash-chained history" bare>
     <p class="mt-4 text-sm text-off-white/80">
-      This is how fragmented records become a single, reliable history.
+      This is how fragmented records become a single, ordered history.
     </p>
 
     <div class="mt-10 flex flex-wrap items-center justify-between text-sm text-off-white/80">
@@ -53,7 +49,7 @@ import Section from "../components/Section.astro";
       <div class="text-off-white/40">→</div>
 
       <div class="text-center">
-        <div class="text-off-white opacity-90">Verification Bundle</div>
+        <div class="text-off-white opacity-90">Sealed Bundle</div>
         <div class="text-off-white opacity-75">bundle.zip</div>
       </div>
 
@@ -67,156 +63,39 @@ import Section from "../components/Section.astro";
     </div>
 
     <p class="mt-10 text-sm text-off-white/75 text-center max-w-3xl mx-auto">
-      Prima Veritas converts fragmented operational logs into a structured, verifiable history
-      and a portable verification bundle.
+      Prima Veritas converts fragmented operational logs into a structured, hash-chained history
+      and a portable bundle identified by its SHA-256 hash.
     </p>
   </Section>
 
-<!-- SEE A RECONSTRUCTION -->
-  <section id="artifact-demo" class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-12">
-
-      <h2 class="text-lg font-sans tracking-tight text-off-white">
-        See a Reconstruction
-      </h2>
-
-      <p class="mt-4 text-sm text-off-white/80 max-w-3xl">
-        See how fragmented records are reconstructed into a single, verifiable history.
-      </p>
-
-      <div class="mt-10 flex flex-col md:flex-row gap-16">
-
-        <!-- LEFT: PRIMARY INTERACTION -->
-        <div class="flex flex-col gap-4">
-          <label class="text-sm text-off-white/80">Select a sample dataset</label>
-
-          <select id="dataset-select" class="bg-charcoal border border-white/10 text-off-white opacity-90 text-sm px-4 py-2">
-            <option>Industrial Sensor Network</option>
-            <option>Robotics Telemetry</option>
-            <option>Shipyard Commissioning</option>
-            <option>Audit Log Reconstruction</option>
-            <option>Machine Learning Pipeline</option>
-          </select>
-
-          <button id="run-artifact" class="bg-carbon-navy font-semibold text-sm border border-white/20 px-4 py-2 hover:text-[var(--accent)] transition-colors opacity-90">
-            Run Reconstruction
-          </button>
-
-          <p class="text-xs text-off-white/50">Takes a few seconds. No setup required.</p>
-        </div>
-
-        <!-- RIGHT: ESCALATION PATH -->
-        <div class="flex flex-col gap-3 justify-center">
-          <div class="text-sm text-off-white">Have your own data?</div>
-          <p class="text-sm text-off-white/70">Upload a dataset to generate a verification bundle.</p>
-          <a href="/example-reconstruction" 
-            class="nav-link w-fit text-sm text-off-white/70 hover:text-[var(--accent)] transition-colors">
-            → Use your own data
-          </a>
-        </div>
-
-      </div>
-
-      <!-- OUTPUT PANEL -->
-      <div id="artifact-result" class="mt-10 border border-white/10 p-6 text-sm text-off-white/80 max-w-fit hidden">
-        <p class="text-off-white">Artifact Generated</p>
-
-        <div class="mt-6 text-off-white/60 space-y-4">
-          <div>
-            <div>Dataset</div>
-            <div id="dataset-name" class="font-mono">Shipyard Commissioning</div>
-          </div>
-          <div>
-            <div>Events Processed</div>
-            <div id="events-processed" class="font-mono">147</div>
-          </div>
-          <div>
-            <div class="font-semibold">Artifact Hash</div>
-            <div id="artifact-hash" class="font-mono break-all">SHA-256: ...</div>
-          </div>
-          <div class="pt-2">
-            <a id="bundle-download" href="#" download="bundle.zip"
-              class="nav-link text-sm text-off-white/70 hover:text-[var(--accent)] transition-colors">
-              → Download Artifact Bundle
-            </a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <script>
-      const datasetName = document.getElementById("dataset-name");
-      const button = document.getElementById("run-artifact");
-      const result = document.getElementById("artifact-result");
-      const dataset = document.getElementById("dataset-select");
-      const hash = document.getElementById("artifact-hash");
-      const events = document.getElementById("events-processed");
-      const downloadLink = document.getElementById("bundle-download");
-
-      const datasetMap = {
-        "Industrial Sensor Network": {
-          hash: "a3f8c2d914e7b056f2819c3d4a0e6f1b8c7d2e9f0a1b3c4d5e6f7a8b9c0d1e2",
-          bundle: "/reconstruction_bundles/industrial_sensors/bundle.zip"
-        },
-        "Robotics Telemetry": {
-          hash: "b84da7c2e1f5a9b3d0c6e8f4a2b7d1e3c9f0a5b8d2e6c4a1b3d7f9e0c2a8b5d4",
-          bundle: "/reconstruction_bundles/robotics/bundle.zip"
-        },
-        "Shipyard Commissioning": {
-          hash: "91bd4e7f2a3c1d0e5f8b9c4a7d2e6f1a3b0c5d8e9f2a4b7c1d3e5f0a8b2c6d9",
-          bundle: "/reconstruction_bundles/shipyard/bundle.zip"
-        },
-        "Audit Log Reconstruction": {
-          hash: "ec96c34273df016723223f03b6db94ba0570b6be91e7ee04dbbf7f0a99676e1a",
-          bundle: "/reconstruction_bundles/audit_logs/bundle.zip"
-        },
-        "Machine Learning Pipeline": {
-          hash: "5c3e2984a1f7b0d6e2c9a4b8f3d1e7c0a5b2d8f9e1c3a6b4d0e7f2c8a9b1d5e4",
-          bundle: "/reconstruction_bundles/ml_pipeline/bundle.zip"
-        }
-      };
-
-      button.addEventListener("click", () => {
-        const selected = dataset.value;
-        const data = datasetMap[selected];
-        datasetName.textContent = selected;
-        hash.textContent = "SHA-256: " + data.hash;
-        events.textContent = 147;
-        downloadLink.href = data.bundle;
-        result.classList.remove("hidden");
-      });
-
-      dataset.addEventListener("change", () => {
-        result.classList.add("hidden");
-      });
-    </script>
-  </section>
+<!-- SEE A RECONSTRUCTION: removed 2026-09-30 (PV-EVH-001 Phase 0). The displayed sample hashes did not match the sample bundles' contents. -->
 
   <!-- WHAT THE SYSTEM GUARANTEES -->
-  <Section title="What the system guarantees" bare>
+  <Section title="What the system does" bare>
     <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white/80">
       <div>
         <strong class="text-off-white">Consistent event history</strong><br/>
         Events are normalized into a single, ordered record across systems.
       </div>
       <div>
-        <strong class="text-off-white">Immutable sequence</strong><br/>
-        Each event is fixed in place and cannot be altered without detection.
+        <strong class="text-off-white">Hash-chained sequence</strong><br/>
+        Changes inside a sealed record are detectable. Replacing the whole record is detectable
+        only against a receipt kept separately.
       </div>
       <div>
         <strong class="text-off-white">Reproducible output</strong><br/>
-        The same input always produces the same verified result.
+        The same input produces the same output (shown on one machine; cross-machine testing pending).
       </div>
       <div>
-        <strong class="text-off-white">Verifiable outside your systems</strong><br/>
-        Records can be checked and confirmed independently of the systems that produced them.
+        <strong class="text-off-white">Recheckable outside your systems</strong><br/>
+        A record can be rechecked without access to the systems that produced it. The check
+        states what it trusts.
       </div>
     </div>
   </Section>
 
   <!-- PRODUCTION CAPABILITIES -->
-  <Section title="What this becomes in production" bare>
+  <Section title="Roadmap (in development, not yet available)" bare>
     <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white/80">
       <div>
         <strong class="text-off-white">Replayable timeline visualization</strong><br/>
@@ -228,7 +107,7 @@ import Section from "../components/Section.astro";
       </div>
       <div>
         <strong class="text-off-white">Audit-ready exports</strong><br/>
-        Produce structured, verifiable reports for internal review and external compliance.
+        Produce structured reports for internal review.
       </div>
       <div>
         <strong class="text-off-white">Cross-system lineage</strong><br/>
@@ -238,47 +117,31 @@ import Section from "../components/Section.astro";
   </Section>
 
   <!-- REAL WORLD APPLICATIONS -->
-  <Section title="Real world applications" bare>
+  <Section title="Designed for" bare>
+    <p class="mt-4 text-sm text-off-white/60">
+      Target settings. Work to date uses synthetic data only; there are no production deployments.
+    </p>
     <div class="mt-6 grid md:grid-cols-3 gap-8 text-sm text-off-white/80">
       <div>
         <strong class="text-off-white">Logistics & Shipyards</strong><br/>
-        Clarifies what happened, when it happened, and who did what across complex builds and handoffs.
+        Records of what happened, when, and who did what across builds and handoffs.
       </div>
       <div>
         <strong class="text-off-white">Robotics & Industrial Systems</strong><br/>
-        Reconstructs how systems behaved over time to understand failures and decisions.
+        Records of how systems behaved over time.
       </div>
       <div>
         <strong class="text-off-white">Energy & Infrastructure</strong><br/>
-        Creates a clear, consistent history across systems and vendors without relying on any single source.
+        One ordered history across systems and vendors.
       </div>
     </div>
   </Section>
 
-  <!-- OPEN SOURCE -->
-  <Section title="Open and Verifiable System">
+  <!-- CONTACT -->
+  <Section title="Technical Review" last={true}>
     <p>
-      The Prima Veritas reconstruction system and build pipeline are published as open source.
-      The full process for generating and verifying a verification bundle is transparent and inspectable.
-    </p>
-    <p>
-      Anyone can reproduce the same result and confirm its integrity using the same pipeline.
-    </p>
-  </Section>
-
-  <!-- PILOT ENGAGEMENT -->
-  <Section title="Pilot Engagement" last={true}>
-    <p>
-      Prima Veritas is currently working with teams to reconstruct and verify operational history
-      within their existing systems.
-    </p>
-    <p>
-      We start with a small, well-defined dataset and produce a clear, verifiable record of what
-      actually happened.
-    </p>
-    <p>
-      This allows teams to evaluate the system using their own data, without changing their
-      workflows or infrastructure.
+      We start with a small, well-defined dataset and produce an ordered, hash-chained record of
+      what the source data says happened.
     </p>
     <a href="/contact"
       class="nav-link text-sm hover:text-[var(--accent)] transition-colors">

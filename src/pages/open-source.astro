@@ -14,65 +14,9 @@ import Layout from "../layouts/Layout.astro";
       </h1>
 
       <p class="mt-6 max-w-4xl text-xl text-off-white/80">
-        Prima Veritas publishes its core event kernel and deterministic build pipeline.
-        The verification path is inspectable and reproducible.
+        The Prima Veritas kernel and build pipeline are not currently published.
+        This page will link to source if and when it is released.
       </p>
-    </div>
-  </section>
-
-
-  <!-- KERNEL -->
-  <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
-      <h2 class="text-lg font-sans tracking-tight text-off-white">
-        Prima Veritas Kernel
-      </h2>
-
-      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-        <p>
-          The event envelope specification, hash chaining logic, and deterministic
-          serialization engine are open and auditable.
-        </p>
-
-        <p>
-          Canonical normalization rules and hashing behavior are defined in source.
-          There is no hidden verification layer.
-        </p>
-      </div>
-
-      <div class="mt-6 text-sm text-off-white/60">
-        <code class="block">
-          https://github.com/prima-veritas/prima-veritas-kernel
-        </code>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- DETERMINISTIC BUILD -->
-  <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
-      <h2 class="text-lg font-sans tracking-tight text-off-white">
-        Deterministic build process
-      </h2>
-
-      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-        <p>
-          Builds are reproducible from source using pinned dependencies,
-          fixed serialization rules, and hash-verified artifacts.
-        </p>
-
-        <p>
-          Given identical input state, the exported bundle hash remains stable
-          across environments.
-        </p>
-      </div>
-
-      <code class="block mt-6 text-off-white/60">
-{`$ git clone https://github.com/prima-veritas/prima-veritas-kernel
-$ make deterministic-build
-$ sha256sum bundle.pv`}
-      </code>
     </div>
   </section>
 
@@ -97,48 +41,20 @@ $ sha256sum bundle.pv`}
         <div>
           <strong>Append-only hash chain</strong>
           <p class="mt-2">
-            Each event embeds the prior event hash.
-            Sequence integrity is mechanically verifiable.
+            Each event embeds the prior event hash. Changing or reordering an event breaks
+            the link to every later event. Removing events from the end is detectable only
+            against a receipt kept separately.
           </p>
         </div>
 
         <div>
           <strong>Deterministic bundle export</strong>
           <p class="mt-2">
-            Bundles serialize using fixed ordering rules.
-            Runtime variance is eliminated.
+            Bundles serialize using fixed ordering rules. Identical output from identical
+            input has been shown on one machine; cross-machine testing is pending.
           </p>
         </div>
 
-        <div>
-          <strong>Independent verification</strong>
-          <p class="mt-2">
-            Any third party can reconstruct the chain and validate
-            the resulting root hash against the published digest.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- WHY OPEN -->
-  <section class="border-b border-white/10">
-    <div class="max-w-6xl mx-auto px-6 py-10">
-      <h2 class="text-lg font-sans tracking-tight text-off-white">
-        Why open source
-      </h2>
-
-      <div class="mt-6 max-w-4xl text-sm text-off-white/80 space-y-4">
-        <p>
-          Deterministic infrastructure should not depend on opaque mechanisms.
-        </p>
-
-        <p>
-          The core verification path is public by design.
-          Commercial deployment layers remain separate from the kernel.
-        </p>
       </div>
     </div>
   </section>
@@ -149,7 +65,7 @@ $ sha256sum bundle.pv`}
     <div class="max-w-6xl mx-auto px-6 py-10">
 
       <h2 class="text-lg font-sans tracking-tight text-off-white">
-        Inspect the kernel or request a pilot
+        Technical review
       </h2>
 
       <div class="mt-10 text-xl">

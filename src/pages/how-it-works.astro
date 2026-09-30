@@ -11,14 +11,14 @@ import Section from "../components/Section.astro";
   <!-- HERO -->
   <PageHero
     title="How Prima Veritas works"
-    subtitle="Prima Veritas reconstructs a complete, verifiable history from fragmented operational data."
+    subtitle="Prima Veritas reconstructs a single, hash-chained history from fragmented operational data."
   />
 
   <!-- INTRO -->
   <Section title="At a high level">
     <p>
       Under the hood, the system organizes events into a consistent structure, links them in
-      sequence, and produces a result that can be reproduced and independently verified.
+      sequence, and produces a result that can be reproduced and rechecked.
     </p>
     <p>
       Prima Veritas operates as a parallel layer alongside existing systems — it does not
@@ -31,8 +31,8 @@ import Section from "../components/Section.astro";
     <p>The system performs three core functions:</p>
     <ul class="space-y-2 text-off-white/70 list-none">
       <li>→ Structures events so they can be understood consistently</li>
-      <li>→ Links them in sequence so history cannot be altered without detection</li>
-      <li>→ Exports a verifiable result that can be reproduced and independently checked</li>
+      <li>→ Links them in sequence so changes inside a sealed record are detectable</li>
+      <li>→ Exports a result that can be reproduced and rechecked without the original systems</li>
     </ul>
   </Section>
 
@@ -55,37 +55,35 @@ import Section from "../components/Section.astro";
   <!-- HASH CHAINING -->
   <Section title="Hash chaining">
     <p class="text-off-white/60 italic">
-      Prevents changes to historical records from going undetected.
+      Makes changes to historical records detectable.
     </p>
     <p>
       Each event is cryptographically hashed and linked to the next. The hash of the previous
       event is included in the next record, forming an append-only sequence.
     </p>
     <p>
-      Reordering, tampering, or deletion changes the chain state and invalidates subsequent
-      hashes.
+      Changing or reordering an event changes its hash and breaks the link to every later
+      event.
     </p>
     <p>
-      Even small, unintended changes to historical data will alter the chain and become
-      detectable.
-    </p>
-    <p>
-      Integrity is enforced by the structure itself.
+      The chain alone does not detect removal of events from the end of the sequence, or
+      replacement of the whole record. Those are detectable only against a receipt kept
+      separately.
     </p>
   </Section>
 
   <!-- REPRODUCIBLE EXPORT -->
   <Section title="Reproducible export">
     <p class="text-off-white/60 italic">
-      Guarantees the same input always produces the same result — every time.
+      Designed so the same input produces the same result.
     </p>
     <p>
-      At any point in time, the full chain can be exported as a verification bundle. The bundle
+      At any point in time, the full chain can be exported as a sealed bundle. The bundle
       includes event history and reconstruction rules.
     </p>
     <p>
-      Given the same input, the export process produces identical output. No hidden execution
-      paths or nondeterministic transforms are permitted.
+      Given the same input, the export process produces identical output on the same machine.
+      Cross-machine testing is pending.
     </p>
     <p>
       The system does not infer or fill missing data. Outputs are derived strictly from the
@@ -96,17 +94,12 @@ import Section from "../components/Section.astro";
   <!-- VERIFICATION MODEL -->
   <Section title="Verification model" last={true}>
     <p class="text-off-white/60 italic">
-      Allows any party to independently confirm that the record is correct.
+      Allows a bundle to be rechecked without the original systems. The check states what it trusts.
     </p>
-    <p>Each verification bundle can be checked to confirm that:</p>
-    <ul class="space-y-2 text-off-white/70 list-none">
-      <li>→ the event history is complete</li>
-      <li>→ the sequence has not been altered</li>
-      <li>→ no records have been added, removed, or changed</li>
-    </ul>
+    <p>A bundle can be checked to confirm that the sequence is consistent and unchanged since
+      it was sealed, within the limits above.</p>
     <p>
-      Verification does not require access to the systems that originally produced the data.
-      The bundle contains everything needed to confirm its integrity.
+      The check does not establish that the source data was complete or correct.
     </p>
     <a href="/contact"
       class="nav-link text-sm hover:text-[var(--accent)] transition-colors">

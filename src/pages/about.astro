@@ -16,7 +16,7 @@ import Section from "../components/Section.astro";
   <Section title="What Prima Veritas Is">
     <p>
       Prima Veritas reconstructs operational history from fragmented system data and produces
-      a record that can be independently verified.
+      a hash-chained record that can be rechecked without the original systems.
     </p>
     <p>
       It does not replace existing systems, analyze performance, or interpret outcomes.
@@ -38,8 +38,8 @@ import Section from "../components/Section.astro";
       accuracy matters.
     </p>
     <p>
-      Prima Veritas exists to remove that ambiguity by producing a record that is
-      consistent, reproducible, and verifiable.
+      Prima Veritas is designed to reduce that ambiguity by producing a record that is
+      consistent and reproducible.
     </p>
   </Section>
 
@@ -49,44 +49,30 @@ import Section from "../components/Section.astro";
       preserves that sequence exactly as it occurred.
     </p>
     <p>
-      Each event is linked to the next, forming a continuous chain. If events are changed,
-      removed, or reordered, the structure no longer aligns.
+      Each event is linked to the next, forming a continuous chain. If events inside a sealed
+      record are changed or reordered, the structure no longer aligns.
     </p>
     <p>
-      This makes the record tamper-evident and ensures that the history can be trusted as
-      a stable reference point.
+      Removing events from the end, or replacing the whole record, is detectable only against
+      a receipt kept separately.
     </p>
   </Section>
 
   <Section title="Verification Model">
     <p>
-      Every reconstruction produces a portable verification bundle.
+      Every reconstruction produces a portable, sealed bundle identified by its SHA-256 hash.
     </p>
     <p>
-      This bundle contains the reconstructed history along with the information needed to
-      confirm that it has not been altered.
-    </p>
-    <p>
-      Verification can be performed independently, without access to the original systems
-      that produced the data.
-    </p>
-    <p>
-      If the record has changed in any way, the verification result will not match.
+      The bundle can be rechecked without access to the original systems that produced the
+      data. Checking it against a hash kept separately shows whether it has changed since it
+      was sealed.
     </p>
   </Section>
 
-  <Section title="System Expansion">
+  <Section title="Roadmap (in development, not yet available)">
     <p>
-      Once operational history is reconstructed and verified, it becomes a reliable foundation
-      for further analysis and decision-making.
-    </p>
-    <p>
-      Teams can replay events, identify deviations, generate audit-ready outputs, and trace
-      relationships across systems — all from the same underlying record.
-    </p>
-    <p>
-      These capabilities emerge naturally from having a consistent, reproducible history,
-      rather than requiring separate systems or pipelines.
+      Planned capabilities built on the same underlying record: replaying events, generating
+      structured reports, and tracing relationships across systems.
     </p>
   </Section>
 
@@ -99,7 +85,7 @@ import Section from "../components/Section.astro";
     </p>
     <p>
       Most systems focus on collecting data or producing outputs. Few ensure that the
-      historical record itself is consistent, complete, and defensible.
+      historical record itself is consistent.
     </p>
     <p>
       Prima Veritas treats operational history as a first-class problem.
@@ -107,7 +93,7 @@ import Section from "../components/Section.astro";
   </Section>
 
   <!-- FOUNDERS — bare for custom layout -->
-  <Section title="Founders" bare>
+  <Section title="Founders" bare last={true}>
     <div class="mt-10 max-w-4xl space-y-10">
 
       <div>
@@ -138,15 +124,6 @@ import Section from "../components/Section.astro";
       </div>
 
     </div>
-  </Section>
-
-  <Section title="Open Source" last={true}>
-    <p>
-      The core reconstruction pipeline is publicly available.
-    </p>
-    <p>
-      Anyone can inspect how records are built and verify results using the same process.
-    </p>
   </Section>
 
 </main>
