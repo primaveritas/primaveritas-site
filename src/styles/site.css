@@ -4,7 +4,7 @@
 
    PV Web v1 tokens (homepage locked 2026-10-01)
    - Palette (contrast on paper #faf8f4): ink #13252d 14.9:1 (headings, nav, emphasis) · body #3a4950 8.8:1 (running text,
-     the synthetic-scenario caption) · muted #66747a 4.56:1 (secondary microcopy, footer, 14px minimum) · teal-text #0d6f7c
+     deployment modes) · muted #66747a 4.56:1 (secondary microcopy, footer, 14px minimum) · teal-text #0d6f7c
      5.5:1 (kickers, capability names) · teal #1597a8 3.3:1 (non-text marks, rules, focus) · rules #dcd7cd / #c9c3b6 (decorative).
      The dark Workstation screenshot is the only dense object on the page.
    - Type: Inter 300/400/500/600, self-hosted. H1 44–88px/500, -0.035em · section heads 30–48px/500 · statements 24–46px ·
@@ -88,7 +88,6 @@ html:has(body.site) { scroll-behavior: smooth; }
 .reveal .callouts li { border-top: 1px solid var(--ink); padding-top: 16px; }
 .reveal .callouts strong { display: block; font-size: 17px; font-weight: 500; color: var(--ink); }
 .reveal .callouts span { display: block; margin-top: 4px; font-size: 15px; color: var(--muted); }
-.reveal .honesty { margin-top: 28px; font-size: 14px; color: var(--body); }
 
 /* ---------- thesis transition (between Workstation and capability map) ---------- */
 .thesis { padding-top: var(--section); }
