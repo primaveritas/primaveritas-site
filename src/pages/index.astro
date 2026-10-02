@@ -1,154 +1,120 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import PageHero from "../components/PageHero.astro";
-import Section from "../components/Section.astro";
+// Homepage (2026-10 refresh). Six movements: hero, problem transition, Workstation reveal, capability map,
+// two application lenses, close (the contact surface). Single-page release: no links to deeper pages until they exist.
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const principle = ["What happened.", "In what order.", "Against what state.", "With what evidence."];
+
+const callouts = [
+  { title: "Last known good → failure state", body: "An explicit reconstruction boundary." },
+  { title: "First divergence and propagation leads", body: "Where observed change began and how it spread." },
+  { title: "State and mutation evidence", body: "What changed, per entity, field by field." },
+];
+
+const jobs = [
+  { verb: "Reconstruct", gist: "Recover coherent state from fragmented evidence." },
+  { verb: "Control", gist: "Keep consequential actions bounded to explicit state." },
+  { verb: "Verify", gist: "Recheck what occurred against retained evidence." },
+  { verb: "Translate", gist: "Give each role its own view of the same record." },
+  { verb: "Execute", gist: "Coordinate people, software and AI around controlled state." },
+];
+
+const lenses = [
+  { name: "Physical operations", items: ["Delivery & commissioning", "Migrations & cutovers", "Investigations & reconstruction"] },
+  { name: "AI-native operations", items: ["Multi-model workflows", "Changing business context", "Tool actions & human escalation"] },
+];
 ---
 
-<Layout title="Prima Veritas">
-
-<main class="flex-1">
-
-  <!-- HERO -->
-  <PageHero
-    title="Reconstruct Operational History Across Systems"
-    subtitle="Prima Veritas converts fragmented operational logs into a single, hash-chained history of events."
-  />
-
-  <!-- WHY IT MATTERS -->
-  <Section title="Why it matters">
-    <p>
-      When operational history is unclear, teams waste time reconstructing events,
-      resolving conflicting records, and defending decisions across systems.
-    </p>
-    <p>
-      Prima Veritas is designed to produce a single, hash-chained record of what the source
-      data says happened, so teams work from one account instead of several.
-    </p>
-  </Section>
-
-  <!-- DIAGRAM -->
-  <Section title="From scattered logs to a hash-chained history" bare>
-    <p class="mt-4 text-sm text-off-white/80">
-      This is how fragmented records become a single, ordered history.
-    </p>
-
-    <div class="mt-10 flex flex-wrap items-center justify-between text-sm text-off-white/80">
-
-      <div class="text-center">
-        <div class="text-off-white opacity-90">Operational Logs</div>
-        <div class="text-off-white opacity-75">CSV / system events</div>
+<SiteLayout title="Prima Veritas · Operational truth for complex systems">
+  <main>
+    <!-- 1. Hero -->
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <h1 id="hero-title">Operational truth for complex systems</h1>
+      <div class="below">
+        <p class="lede">Prima Veritas is an execution and assurance platform for complex work involving people, software systems and AI.</p>
+        <ul class="principle" aria-label="The record Prima Veritas keeps">
+          {principle.map((line) => <li>{line}</li>)}
+        </ul>
       </div>
+    </section>
 
-      <div class="text-off-white/40">→</div>
-
-      <div class="text-center">
-        <div class="text-off-white opacity-90">Structured Event History</div>
-        <div class="text-off-white opacity-75">events.jsonl</div>
+    <!-- 2. Problem transition -->
+    <section class="transition wrap" aria-label="The problem">
+      <div class="grid">
+        <p class="statement">The real state of complex work rarely lives in one place.</p>
+        <p class="follow">Systems, teams and AI each hold pieces of it. Prima Veritas sits across that environment without replacing the systems already doing the work.</p>
       </div>
+    </section>
 
-      <div class="text-off-white/40">→</div>
+    <!-- 3. Workstation reveal -->
+    <section class="reveal wrap" id="workstation" aria-labelledby="ws-title">
+      <div class="head">
+        <p class="kicker">The Workstation</p>
+        <h2 id="ws-title">See what changed, what changed first, and what followed.</h2>
+        <p class="intro">One working surface for reconstructing operational state, following consequential changes and inspecting the evidence behind them.</p>
+      </div>
+      <figure class="shot">
+        <div class="frame">
+          <img src="/images/workstation-flagship-2x.png" width="2560" height="1440" loading="lazy" decoding="async"
+            alt="The Prima Veritas Workstation: an operational timeline with the boundary between last known good state and failure state marked, a propagation chain across entities, and a reconstruction board listing state and mutation evidence." />
+        </div>
+        <ul class="callouts">
+          {callouts.map((c) => <li><strong>{c.title}</strong><span>{c.body}</span></li>)}
+        </ul>
+      </figure>
+    </section>
 
-      <div class="text-center">
-        <div class="text-off-white opacity-90">Sealed Bundle</div>
-        <div class="text-off-white opacity-75">bundle.zip</div>
-      </div>
+    <!-- Thesis transition: execution → investigation → assurance -->
+    <section class="thesis wrap" aria-label="Why the record matters">
+      <p>The result isn’t just another account of what happened. It’s an operational record that can be acted on, investigated and independently rechecked.</p>
+    </section>
 
-      <div class="text-off-white/40">→</div>
+    <!-- 4. Capability map -->
+    <section class="map wrap" aria-labelledby="map-title">
+      <div class="top">
+        <h2 id="map-title">One operational foundation. Different jobs.</h2>
+        <p class="status">PV is being built around five connected capabilities.</p>
+      </div>
+      <ol>
+        {jobs.map((j) => (
+          <li>
+            <span class="verb">{j.verb}</span>
+            <span class="gist">{j.gist}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
 
-      <div class="text-center">
-        <div class="text-off-white opacity-90">Integrity Hash</div>
-        <div class="text-off-white opacity-75">SHA-256</div>
+    <!-- 5. Two lenses, one architecture -->
+    <section class="lenses wrap" aria-labelledby="apps-title">
+      <div class="grid">
+        <div>
+          <h2 id="apps-title">Where work crosses boundaries.</h2>
+          <p class="bridge">Different environments. The same underlying problem: consequential work distributed across participants and systems.</p>
+        </div>
+        <div class="pair">
+          {lenses.map((l) => (
+            <div>
+              <h3>{l.name}</h3>
+              <ul>{l.items.map((i) => <li>{i}</li>)}</ul>
+            </div>
+          ))}
+        </div>
       </div>
+    </section>
 
-    </div>
-
-    <p class="mt-10 text-sm text-off-white/75 text-center max-w-3xl mx-auto">
-      Prima Veritas converts fragmented operational logs into a structured, hash-chained history
-      and a portable bundle identified by its SHA-256 hash.
-    </p>
-  </Section>
-
-<!-- SEE A RECONSTRUCTION: removed 2026-09-30 (PV-EVH-001 Phase 0). The displayed sample hashes did not match the sample bundles' contents. -->
-
-  <!-- WHAT THE SYSTEM GUARANTEES -->
-  <Section title="What the system does" bare>
-    <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white/80">
-      <div>
-        <strong class="text-off-white">Consistent event history</strong><br/>
-        Events are normalized into a single, ordered record across systems.
+    <!-- 6. Close -->
+    <section class="close wrap" id="contact" aria-labelledby="close-title">
+      <div class="accent"></div>
+      <h2 id="close-title"><span>Find one consequential workflow.</span> <span>Bound it tightly.</span> <span>Prove it against the real operation.</span></h2>
+      <div class="act">
+        <a class="btn solid" href="mailto:contact@primaveritas.io">Talk to us</a>
+        <span class="email">contact@primaveritas.io</span>
       </div>
-      <div>
-        <strong class="text-off-white">Hash-chained sequence</strong><br/>
-        Changes inside a sealed record are detectable. Replacing the whole record is detectable
-        only against a receipt kept separately.
+      <div class="deploy">
+        <p class="lead">Designed to run where the operation requires.</p>
+        <p class="modes">Cloud-connected<span class="sep"> · </span>private<span class="sep"> · </span>on-premises<span class="sep"> · </span>air-gapped</p>
       </div>
-      <div>
-        <strong class="text-off-white">Reproducible output</strong><br/>
-        The same input produces the same output (shown on one machine; cross-machine testing pending).
-      </div>
-      <div>
-        <strong class="text-off-white">Recheckable outside your systems</strong><br/>
-        A record can be rechecked without access to the systems that produced it. The check
-        states what it trusts.
-      </div>
-    </div>
-  </Section>
-
-  <!-- PRODUCTION CAPABILITIES -->
-  <Section title="Roadmap (in development, not yet available)" bare>
-    <div class="mt-6 grid md:grid-cols-2 max-w-4xl gap-10 text-sm text-off-white/80">
-      <div>
-        <strong class="text-off-white">Replayable timeline visualization</strong><br/>
-        Interactively reconstruct operational events with filtering, zoom, and cross-system traceability.
-      </div>
-      <div>
-        <strong class="text-off-white">Continuous verification</strong><br/>
-        Automatically generate and validate verification bundles from recurring operational data.
-      </div>
-      <div>
-        <strong class="text-off-white">Audit-ready exports</strong><br/>
-        Produce structured reports for internal review.
-      </div>
-      <div>
-        <strong class="text-off-white">Cross-system lineage</strong><br/>
-        Trace relationships between systems, teams, and events across time.
-      </div>
-    </div>
-  </Section>
-
-  <!-- REAL WORLD APPLICATIONS -->
-  <Section title="Designed for" bare>
-    <p class="mt-4 text-sm text-off-white/60">
-      Target settings. Work to date uses synthetic data only; there are no production deployments.
-    </p>
-    <div class="mt-6 grid md:grid-cols-3 gap-8 text-sm text-off-white/80">
-      <div>
-        <strong class="text-off-white">Logistics & Shipyards</strong><br/>
-        Records of what happened, when, and who did what across builds and handoffs.
-      </div>
-      <div>
-        <strong class="text-off-white">Robotics & Industrial Systems</strong><br/>
-        Records of how systems behaved over time.
-      </div>
-      <div>
-        <strong class="text-off-white">Energy & Infrastructure</strong><br/>
-        One ordered history across systems and vendors.
-      </div>
-    </div>
-  </Section>
-
-  <!-- CONTACT -->
-  <Section title="Technical Review" last={true}>
-    <p>
-      We start with a small, well-defined dataset and produce an ordered, hash-chained record of
-      what the source data says happened.
-    </p>
-    <a href="/contact"
-      class="nav-link text-sm hover:text-[var(--accent)] transition-colors">
-      → Schedule a Technical Review
-    </a>
-  </Section>
-
-</main>
-
-</Layout>
+    </section>
+  </main>
+</SiteLayout>
