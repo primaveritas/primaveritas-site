@@ -122,7 +122,10 @@ html:has(body.site) { scroll-behavior: smooth; }
 .close h2 span { display: block; }
 .close .act { margin-top: 44px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
 .close .email { font-size: 17px; color: var(--ink); user-select: all; }
-.close .deploy { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--rule); max-width: 560px; font-size: 14px; color: var(--muted); letter-spacing: .01em; }
+.close .deploy { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--rule); max-width: 560px; }
+.close .deploy .lead { font-size: 15px; font-weight: 600; color: var(--ink); }
+.close .deploy .modes { margin-top: 6px; font-size: 17px; font-weight: 400; color: var(--body); }
+.close .deploy .sep { color: var(--teal); }
 
 /* ---------- footer ---------- */
 .site-footer { border-top: 1px solid var(--rule); padding: 44px 0 56px; }
