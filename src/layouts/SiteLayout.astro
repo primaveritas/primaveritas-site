@@ -1,0 +1,52 @@
+---
+// Site layout for the 2026-10 refresh (warm-white editorial system, src/styles/site.css).
+// This release is a deliberate single-page experience: the header only moves within the homepage, and the only
+// links that leave it are the legal pages in the footer. Legacy pages still use Layout.astro and are not linked here.
+import "../styles/site.css";
+
+interface Props { title?: string; description?: string }
+const {
+  title = "Prima Veritas",
+  description = "Prima Veritas is an execution and assurance platform for complex work involving people, software systems and AI.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+
+  <body class="site">
+    <header class="site-header" id="top">
+      <div class="wrap bar">
+        <a class="brand" href="#top" aria-label="Prima Veritas, back to top"><img src="/brand/pv-logo.svg" alt="Prima Veritas" width="158" height="38" /></a>
+        <nav aria-label="Page">
+          <ul>
+            <li><a href="#workstation">Workstation</a></li>
+            <li><a class="btn" href="#contact">Talk to us</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer">
+      <div class="wrap row">
+        <img src="/brand/pv-logo.svg" alt="Prima Veritas" width="124" height="30" />
+        <ul class="legal">
+          <li><a href="/privacy-policy">Privacy</a></li>
+          <li><a href="/conditions">Terms</a></li>
+          <li>© 2026 Prima Veritas</li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>
